@@ -3,9 +3,20 @@
 {% block content %}
 
 <section class="weather">
-  <h1>{{weatherData.currently.summary}}</h1>
-  <h1>Temp: {{weatherData.currently.temperature}}</h1>
+    <h1 id="temp">{{weatherData.currently.temperature}} <sup>&deg;</sup> </h1>
+  <h1 id="summary">{{weatherData.currently.summary}}</h1>  
   <h1>Humidity: {{ weatherData.currently.humidity * 100 }}%</h1>
+</section>
+
+
+<section class="stocks">
+  
+  {% for stock in ['F', 'FB', 'AAPL', 'VT', 'SIRI', 'AMD', 'FIT'] %}
+  <div class="stocks__quote">
+      <h1>{{ stocksData[stock]['quote']['symbol'] }}</h1>
+      <h2>{{ stocksData[stock]['quote']['latestPrice'] }}</h2>
+  </div>  
+  {% endfor %}
 </section>
 
 <div id="player"></div>

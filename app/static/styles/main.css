@@ -9,12 +9,17 @@ body {
   font-family: 'Muli', sans-serif;
 }
 
+h1 {
+  margin: 0;
+  margin-bottom: 1rem;
+}
+
 iframe {
   width: 100%;
   height: 100%;
 }
 
-.weather {
+section {
   position: absolute;
   background: blue;
   background: rgba(255,255,255,0.8);
@@ -24,3 +29,31 @@ iframe {
   border-radius: 5px;  
 }
 
+.stocks {
+  top: 2rem;
+  bottom: 2rem;
+  right: 2rem;
+  display: flex;  
+  flex-direction: column;
+  margin: 0;
+  justify-content: space-around;
+}
+
+.stocks__quote {
+  text-align: center;
+  /* border-bottom: 2px solid #201e1e; */
+}
+
+.stocks__quote h1,
+.stocks__quote h2 {
+  margin: 0;
+  margin-bottom: 0.25rem;
+}
+
+#temp {
+  font-size: 350%;
+}
+
+#summary {
+  font-size: 220%;
+}
