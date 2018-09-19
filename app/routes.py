@@ -14,4 +14,4 @@ def index():
   stocksRes = requests.get(STOCKS_URL)
   stocksJson = stocksRes.json()
 
-  return render_template('index.html', weatherData=weatherJson, stocksData=stocksJson)
+  return render_template('index.html', weatherData=weatherJson, stocksData=stocksJson, YTembed=app.config['YT_EMBED'])
