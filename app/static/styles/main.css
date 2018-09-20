@@ -29,6 +29,9 @@ section {
   border-radius: 5px;  
 }
 
+.inputs {
+  bottom: 2rem;
+}
 .stocks {
   top: 2rem;
   bottom: 2rem;

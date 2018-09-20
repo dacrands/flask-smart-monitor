@@ -8,6 +8,15 @@
   <h1>Humidity: {{ weatherData.currently.humidity * 100 }}%</h1>
 </section>
 
+<section class="inputs">
+  <h1>Select a video</h1>
+  <select name="" id="">
+    <option value="bdnHKdb-Oss">Fish</option>
+    <option value="bjRw0-5CYWo">Beach</option>
+    <option value="ht2TigJp88w">Space</option>
+  </select>
+</section>
+
 
 <section class="stocks">  
   {% for stock in ['F', 'FB', 'AAPL', 'VT', 'SIRI', 'AMD', 'FIT'] %}
@@ -51,5 +60,12 @@
         event.target.mute();
         event.target.seekTo(90);
       }
+
+
+      var inputs = document.querySelector('.inputs');
+      inputs.addEventListener('change', (e) => {
+        player.loadVideoById(e.target.value)
+      });
+
     </script>
 {% endblock %}
