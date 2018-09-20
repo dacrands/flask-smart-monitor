@@ -2,34 +2,63 @@
 
 {% block content %}
 
-<section class="weather">
-    <h1 id="temp">{{weatherData.currently.temperature}} <sup>&deg;</sup> </h1>
-  <h1 id="summary">{{weatherData.currently.summary}}</h1>  
-  <h1>Humidity: {{ weatherData.currently.humidity * 100 }}%</h1>
-</section>
+<main class="main">
+    
+    
+    <div class="dash">        
+        <section class="weather">
+          <div>
+              <h1 id="temp">{{weatherData.currently.temperature}} <sup>&deg;</sup> </h1>
+          </div>          
+          <div>
+              <p id="summary">{{weatherData.currently.summary}}</p>  
+              <p>Humidity: {{ weatherData.currently.humidity * 100 }}%</p>
+          </div>          
+        </section>
+        <section class="inputs">
+            <label>Select a video
+            <select name="" id="">
+              <option value="bdnHKdb-Oss">Fish</option>
+              <option value="bjRw0-5CYWo">Beach</option>
+              <option value="ht2TigJp88w">Space</option>
+              <option value="iGpuQ0ioPrM">Glitter</option>
+              <option value="sadf">BReal</option>
+            </select>
+            </label>
+            <label>Add an embed
+                <input type="text" name="embed" id="embedInput">
+                <button for=embed id="embedButton">Submit</button>
+                </label>                      
+          </section>        
+        </div>  
 
-<section class="inputs">
-  <h1>Select a video</h1>
-  <select name="" id="">
-    <option value="bdnHKdb-Oss">Fish</option>
-    <option value="bjRw0-5CYWo">Beach</option>
-    <option value="ht2TigJp88w">Space</option>
-  </select>
-</section>
+        <div id="player"></div>
+
+        <div class="ticker">
+            <section class="stocks">  
+                {% for stock in ['F', 'FB', 'AAPL', 'VT', 'SIRI', 'AMD', 'FIT'] %}
+                <div class="stocks__quote">
+                  <strong>
+                      <p>{{ stocksData[stock]['quote']['companyName'] }}</p>
+                  </strong>
+                    
+                    <p>{{ stocksData[stock]['quote']['latestPrice'] }}</p>
+                </div>  
+                {% endfor %}
+              </section>
+        </div>  
+</main>
 
 
-<section class="stocks">  
-  {% for stock in ['F', 'FB', 'AAPL', 'VT', 'SIRI', 'AMD', 'FIT'] %}
-  <div class="stocks__quote">
-      <h1>{{ stocksData[stock]['quote']['symbol'] }}</h1>
-      <h2>{{ stocksData[stock]['quote']['latestPrice'] }}</h2>
-  </div>  
-  {% endfor %}
-</section>
+
+
+
+
+
 
 <div class="hide" style="display:none;">{{YTembed}}</div>
 
-<div id="player"></div>
+
     
     <script>
       // 2. This code loads the IFrame Player API code asynchronously.
@@ -62,10 +91,16 @@
       }
 
 
-      var inputs = document.querySelector('.inputs');
+      var inputs = document.querySelector('.inputs select');
       inputs.addEventListener('change', (e) => {
         player.loadVideoById(e.target.value)
       });
+
+      var embedButton = document.getElementById('embedButton');
+      let embedInput = document.getElementById('embedInput');
+      embedButton.addEventListener('click', (e) => {
+        player.loadVideoById(embedInput.value)
+      })
 
     </script>
 {% endblock %}
