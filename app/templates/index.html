@@ -14,27 +14,8 @@
               <p id="summary">{{weatherData.currently.summary}}</p>  
               <p>Humidity: {{ weatherData.currently.humidity * 100 }}%</p>
           </div>          
-        </section>
-        <section class="inputs">
-            <label>Select a video
-            <select name="" id="">
-              <option value="bdnHKdb-Oss">Fish</option>
-              <option value="bjRw0-5CYWo">Beach</option>
-              <option value="ht2TigJp88w">Space</option>
-              <option value="iGpuQ0ioPrM">Glitter</option>
-              <option value="sadf">BReal</option>
-            </select>
-            </label>
-            <label>Add an embed
-                <input type="text" name="embed" id="embedInput">
-                <button for=embed id="embedButton">Submit</button>
-                </label>                      
-          </section>        
-        </div>  
-
-        <div id="player"></div>
-
-        <div class="ticker">
+        </section>        
+          <div class="ticker">
             <section class="stocks">  
                 {% for stock in ['F', 'FB', 'AAPL', 'VT', 'SIRI', 'AMD', 'FIT'] %}
                 <div class="stocks__quote">
@@ -47,6 +28,28 @@
                 {% endfor %}
               </section>
         </div>  
+        </div>  
+
+        <div id="player"></div>
+
+       <section class="inputs">
+          <div class="tool">
+            <span>&#x1f527;</span>            
+          </div> 
+          <label>Select a video
+          <select name="" id="">
+            <option value="bdnHKdb-Oss">Fish</option>
+            <option value="bjRw0-5CYWo">Beach</option>
+            <option value="ht2TigJp88w">Space</option>
+            <option value="iGpuQ0ioPrM">Glitter</option>
+            <option value="sadf">BReal</option>
+          </select>
+          </label>
+          <label>Add an embed
+            <input type="text" name="embed" id="embedInput">
+            <button for=embed id="embedButton">Submit</button>
+          </label>                              
+      </section>        
 </main>
 
 
@@ -91,8 +94,8 @@
       }
 
 
-      var inputs = document.querySelector('.inputs select');
-      inputs.addEventListener('change', (e) => {
+      var inputSelect = document.querySelector('.inputs select');
+      inputSelect.addEventListener('change', (e) => {
         player.loadVideoById(e.target.value)
       });
 
@@ -102,5 +105,11 @@
         player.loadVideoById(embedInput.value)
       })
 
+      var toolSpan = document.querySelector('.tool span');      
+      var inputs = document.querySelector('.inputs');
+      toolSpan.addEventListener('click', () => {
+        console.log('clicked');
+        inputs.classList.toggle('inputs--show');
+      });
     </script>
 {% endblock %}
