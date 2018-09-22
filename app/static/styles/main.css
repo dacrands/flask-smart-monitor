@@ -47,6 +47,10 @@ p {
   position: absolute;
 }
 
+
+/* ===============
+    WEATHER
+================*/
 .weather {
   padding: 0 0.5em;
   display: flex;
@@ -69,9 +73,13 @@ p {
   font-size: 300%;
 }
 
+/* ===============
+    INPUTS
+================*/
+
 .inputs {
   /* text-align: center; */
-  padding: 1em 0.5em;  
+  
   background: rgba(34, 33, 33, 0.685);
   position: absolute;
   bottom: 0;
@@ -81,24 +89,24 @@ p {
   transition: all 200ms ease;
 }
 
+.inputs__container {
+  position: relative;
+  padding: 1em 0.5em;  
+}
+
+.inputs__button {
+  position: absolute;
+  top: 0;
+  transform: translateY(-100%);  
+}
+
+.inputs__button button {
+  padding: 1em 0.5em;  
+}
+
 .inputs--show {
   transform: translateY(0);
 }
-
-.tool {
-  position: relative;
-  
-}
-
-.tool span {
-  font-size: 2.4rem;
-  position: absolute;
-  transform: translateY(-130%);  
-  background: rgba(19, 47, 172, 0.705);
-  cursor: pointer;
-}
-
-
 
 .inputs label {
   margin-bottom: 1em;  
@@ -128,6 +136,9 @@ p {
   background: #DADADA;
 }
 
+/* ===============
+    STOCKS
+================*/
 .stocks {
   /* outline: 2px solid salmon; */
   padding: 0;
