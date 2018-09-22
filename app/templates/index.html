@@ -2,54 +2,16 @@
 
 {% block content %}
 
-<main class="main">
-    
-    
-    <div class="dash">        
-        <section class="weather">
-          <div>
-              <h1 id="temp">{{weatherData.currently.temperature}} <sup>&deg;</sup> </h1>
-          </div>          
-          <div>
-              <p id="summary">{{weatherData.currently.summary}}</p>  
-              <p>Humidity: {{ weatherData.currently.humidity * 100 }}%</p>
-          </div>          
-        </section>        
-          <div class="ticker">
-            <section class="stocks">  
-                {% for stock in ['F', 'FB', 'AAPL', 'VT', 'SIRI', 'AMD', 'FIT'] %}
-                <div class="stocks__quote">
-                  <strong>
-                      <p>{{ stocksData[stock]['quote']['companyName'] }}</p>
-                  </strong>
-                    
-                    <p>{{ stocksData[stock]['quote']['latestPrice'] }}</p>
-                </div>  
-                {% endfor %}
-              </section>
-        </div>  
-        </div>  
+<main class="main">        
+  <div class="dash">         
+    {% include "_weather.html" %}                         
+    {% include "_stocks.html" %}   
+                              
+  </div>  
 
-        <div id="player"></div>
+  <div id="player"></div>
 
-       <section class="inputs">
-          <div class="tool">
-            <span>&#x1f527;</span>            
-          </div> 
-          <label>Select a video
-          <select name="" id="">
-            <option value="bdnHKdb-Oss">Fish</option>
-            <option value="bjRw0-5CYWo">Beach</option>
-            <option value="ht2TigJp88w">Space</option>
-            <option value="iGpuQ0ioPrM">Glitter</option>
-            <option value="sadf">BReal</option>
-          </select>
-          </label>
-          <label>Add an embed
-            <input type="text" name="embed" id="embedInput">
-            <button for=embed id="embedButton">Submit</button>
-          </label>                              
-      </section>        
+  {% include "_inputs.html" %}                             
 </main>
 
 
