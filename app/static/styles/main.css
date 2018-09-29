@@ -47,6 +47,16 @@ p {
   position: absolute;
 }
 
+/* ===============
+      FORM
+================*/
+.form__container {
+  max-width: 500px;
+  margin: 0 auto;
+  margin-top: 10%;
+  /* display: flex;
+  align-content: center; */
+}
 
 /* ===============
     WEATHER
@@ -94,6 +104,20 @@ p {
   padding: 1em 0.5em;  
 }
 
+.inputs__link {
+  color: aqua;
+}
+
+.inputs__link:visited {
+  color: lightcoral;
+}
+
+.inputs__link:hover {
+  color: white;
+}
+
+
+
 .inputs__button {
   position: absolute;
   top: 0;
@@ -125,7 +149,7 @@ p {
   background: rgb(39, 119, 194);
   color: #f9f9f9;
   border: none;
-  border-radius: 5px;    
+  border-radius: 3px;    
   padding: 0.5rem;
   cursor: pointer;
   transition: all 120ms;
