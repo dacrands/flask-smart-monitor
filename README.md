@@ -6,7 +6,7 @@ Set a custom background video, view the weather and stock prices.
 
 ## Table of Contents
 - [Background](#background)
-- [Getting Started](#get-started)
+- [Getting Started](#getting-started)
 - [How it works](#how)
 - [Hosting](#hosting)
 
@@ -28,8 +28,6 @@ Here is how I use this application:
 4. Hit refresh (F5) to update info. (this is to be automated)
 
 ### Configuration
-To use this application, you will need to configure some environment variables. 
-
 You will need a free [Darsky API key](https://darksky.net/dev) for the weather.
 
 ```
@@ -38,14 +36,14 @@ C:\flask-smart-frame>: set WEATHER_API_KEY=<api_key>
 
 Set your latitude and longitude.
 ```
-C:\flask-smart-frame>: set LONGITUDE=<lon>
-C:\flask-smart-frame>: set LATITUDE=<lat>
+C:\flask-smart-frame>:set LONGITUDE=<lon>
+C:\flask-smart-frame>:set LATITUDE=<lat>
 ```
 
 Of course, you must configure `FLASK_APP`
 
 ```
-C:\flask-smart-frame>: set FLASK_APP=run.py
+C:\flask-smart-frame>:set FLASK_APP=run.py
 ```
 
 ## To Do

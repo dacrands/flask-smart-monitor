@@ -3,8 +3,11 @@ from app import app
 import requests
 from xml.etree import ElementTree
 
+stockList = ["f","fb","aapl","vt","siri","amd","fit","tsla"]
+stockStr = ','.join(stockList).rstrip(',')
+
 WEATHER_URL = "https://api.darksky.net/forecast/{0}/{1},{2}".format(app.config['WEATHER_API_KEY'], app.config['LATITUDE'], app.config['LONGITUDE'])
-STOCKS_URL = "https://api.iextrading.com/1.0/stock/market/batch?symbols=f,fb,aapl,vt,siri,amd,fit&types=quote,news,chart&range=1m&last=10"
+STOCKS_URL = "https://api.iextrading.com/1.0/stock/market/batch?symbols={0}&types=quote,news,chart&range=1m&last=10".format(stockStr)
 
 @app.route('/')
 def index():

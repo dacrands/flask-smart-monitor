@@ -97,12 +97,11 @@ p {
 .inputs__button {
   position: absolute;
   top: 0;
+  left: 1em;
   transform: translateY(-100%);  
+  font-size: 1.2rem;
 }
 
-.inputs__button button {
-  padding: 1em 0.5em;  
-}
 
 .inputs--show {
   transform: translateY(0);
@@ -123,17 +122,18 @@ p {
 
 .inputs button {
   margin-top: 0.5em;
-  background: #f9f9f9;
+  background: rgb(39, 119, 194);
+  color: #f9f9f9;
   border: none;
   border-radius: 5px;    
-  padding: 0.2em;
+  padding: 0.5rem;
   cursor: pointer;
   transition: all 120ms;
   /* margin-left: 1em; */
 }
 
 .inputs button:hover {
-  background: #DADADA;
+  background: rgb(74, 152, 226);
 }
 
 /* ===============
