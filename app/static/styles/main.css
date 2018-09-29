@@ -48,6 +48,21 @@ p {
 }
 
 /* ===============
+      FLASH
+================*/
+.flash {
+  background: rgb(211, 40, 91);
+  list-style: none;
+  margin: 0;  
+}
+
+.flash li {
+  padding: 1em;
+  color: #f9f9f9;
+}
+
+
+/* ===============
       FORM
 ================*/
 .form__container {
@@ -56,6 +71,22 @@ p {
   margin-top: 10%;
   /* display: flex;
   align-content: center; */
+}
+
+.form__container input {
+  margin-bottom: 0.5rem;
+}
+
+
+
+.error {
+  background: rgb(211, 40, 91);
+  color: #f9f9f9;
+  padding: 0.5rem;
+  /* margin: 1rem; */
+  display: inline-block;
+  margin-bottom: 1rem;
+  border-radius: 3px;
 }
 
 /* ===============
