@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+{% include "_header.html" %} 
 <div class="form__container">
   <h1>Sign in</h1>
   <form class="form" action="" method="post" novalidate>
@@ -22,7 +23,11 @@
     <p>{{ form.remember_me() }}{{ form.remember_me.label }}</p>
     <p class=>{{ form.submit() }}</p>
 
-    <a href="{{ url_for('register') }}">Register</a>
+    <p>Not a member? 
+      <a href="{{ url_for('register') }}">Register here &rsaquo;</a> 
+      <br> 
+      Not sure what this is?
+      <a href="{{ url_for('about') }}">Learn more &rsaquo;</a></p>        
   </form>
 </div>
 

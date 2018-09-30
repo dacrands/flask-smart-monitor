@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% include "_header.html" %}
+<div class="container">
+  <div class="container__item">
+    <h1>What is a SmartFrame?</h1>
+
+    <p>You can think of the SmartFrame as a piece of functional art.</p>
+    <p>The functionality comes from being able to view real-time weather and
+      stock information; the art comes from the configurable backrgound video.</p>
+  </div>
+  <div class="container__item">
+    <h1>How does it work?</h1>
+    <p>There are a number of ways run this application. Your configuration will largely
+      depend on your technical knowledge, though even someone with no programming
+      experience can use this applicaton.
+    </p>
+    <h2>Level I</h2>
+    <p>Simply open in your favorite browser, hit (F11) to enter "full-screen" mode. </p>
+    <h2>Level II</h2>
+    <p>Connect a Raspberrypi a PC-monitor and run full-screen in the Chromium browser. 
+      This way you can use <code>vcgencmd</code> and <code>cronjob</code> 
+      to automate turning the designated monitor on/off according to your
+      schedule.
+  </div>
+</div>
+
+{% endblock %}

@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+{% include "_header.html" %}     
 <div class="form__container">
   <h1>Register</h1>
   <form action="" method="post" novalidate>
@@ -43,7 +44,7 @@
   </form>
 
   <p>Already registered?   
-    <a href="{{ url_for('login') }}">Login here.</a>
+    <a href="{{ url_for('login') }}">Login here &rsaquo;</a>
   </p>
 </div>
 

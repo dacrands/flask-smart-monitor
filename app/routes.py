@@ -29,6 +29,10 @@ def index():
     return render_template('index.html', weatherData=weatherJson, stocksData=stocksJson, YTembed=app.config['YT_EMBED'])
 
 
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
