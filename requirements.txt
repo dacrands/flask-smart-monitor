@@ -9,6 +9,7 @@ Flask-Bcrypt==0.7.1
 Flask-Login==0.4.1
 Flask-Migrate==2.2.1
 Flask-SQLAlchemy==2.3.2
+Flask-WTF==0.14.2
 idna==2.7
 itsdangerous==0.24
 Jinja2==2.10
@@ -17,10 +18,13 @@ MarkupSafe==1.0
 pycparser==2.19
 python-dateutil==2.7.3
 python-editor==1.0.3
+python-http-client==3.1.0
 requests==2.19.1
+sendgrid==5.6.0
 six==1.11.0
 SQLAlchemy==1.2.12
 urllib3==1.23
 Werkzeug==0.14.1
 wincertstore==0.2
+WTForms==2.2.1
 xmltodict==0.11.0

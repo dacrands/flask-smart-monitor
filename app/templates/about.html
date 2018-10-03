@@ -4,10 +4,9 @@
 
 {% include "_navbar.html" %}
 {% include "_header.html" %}
-<div class="container">
+<main class="container">
   <div class="container__item">
     <h1>What is a SmartFrame?</h1>
-
     <p>You can think of the <strong>SmartFrame</strong> as a piece of functional art.</p>
     <p>The functionality comes from being able to view real-time weather information and the
       scrolling stock-ticker. The art comes from the configurable backrgound video.</p>
@@ -19,14 +18,22 @@
       depend on your technical knowledge, though even someone with no programming
       experience can use this applicaton.
     </p>
+
     <h2>Level I</h2>
     <p>Simply open in your favorite browser, hit (F11) to enter "full-screen" mode. </p>
+    
     <h2>Level II</h2>
     <p>Connect a Raspberrypi a PC-monitor and run full-screen in the Chromium browser. 
       This way you can use <code>vcgencmd</code> and <code>cronjob</code> 
       to automate turning the designated monitor on/off according to your
       schedule.
+
+    <h2>Level III</h2>
+    <p>
+      A lot of improvements can be made to this application.
+      Make a pull-request here &mdash; <a href="https://github.com/dacrands/flask-smart-monitor">SmartFrame repo</a> </p>
   </div>
-</div>
+  
+</main>
 
 {% endblock %}

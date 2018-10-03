@@ -6,6 +6,7 @@ from werkzeug.urls import url_parse
 from app import app, db
 from app.forms import LoginForm, RegistrationForm
 from app.models import User
+from app.email import send_email
 
 stockList = ["f", "fb", "aapl", "vt", "siri", "amd", "fit", "tsla"]
 stockStr = ','.join(stockList).rstrip(',')
@@ -31,6 +32,7 @@ def index():
 
 @app.route('/about')
 def about():
+    send_email('welcome@crandall.com', 'This is a test', 'davecrands@gmail.com', render_template('email.html'))
     return render_template('about.html')
 
 @app.route('/login', methods=['GET', 'POST'])
