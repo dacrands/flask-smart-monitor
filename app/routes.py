@@ -32,8 +32,18 @@ def index():
 
 @app.route('/about')
 def about():
-    send_email('welcome@crandall.com', 'This is a test', 'davecrands@gmail.com', render_template('email.html'))
+    
     return render_template('about.html')
+
+# @app.route('/email')
+# def email():
+    
+#     send_email('welcome@crandall.com', 
+#                'This is a test', 
+#                'davecrands@gmail.com', 
+#                render_template('email.html', token=token))
+#     flash('An email was sent....')
+#     return render_template('/login')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -43,8 +53,10 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user is None or not user.check_password(form.password.data):
-            print("==============ASD===============")
             flash('Invalid username or password')
+            return redirect(url_for('login'))
+        if not user.is_verified:
+            flash('You need to verify your account')
             return redirect(url_for('login'))
         login_user(user, remember=form.remember_me.data)
         next_page = request.args.get('next')
@@ -52,6 +64,20 @@ def login():
             next_page = url_for('index')
         return redirect(next_page)
     return render_template('login.html', form=form)
+
+@app.route('/login/<token>')
+def ver_token(token):
+    user_id = User.verify_email_token(token)
+    if type(user_id) == None:
+        flash('You stink!')
+        return redirect(url_for('index'))
+    user = User.query.get(user_id)
+    user.set_verify(True)
+    print(user.is_verified)
+    db.session.commit()
+    login_user(user)
+    return redirect(url_for('index'))
+
 
 @app.route('/logout')
 def logout():
@@ -69,6 +95,11 @@ def register():
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
-        flash('Congratulations! You are now registered!')
+        token = user.get_email_token()
+        send_email('welcome@crandall.com', 
+               'Email confirmation!', 
+               app.config['ADMIN'], 
+               render_template('email.html', token=token))
+        flash('Thanks! We just sent an email confirmation.')        
         return redirect(url_for('login'))
     return render_template('register.html', form=form)

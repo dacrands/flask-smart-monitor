@@ -1,3 +1,13 @@
+<div style="background: rgb(16, 107, 103); 
+            text-align: center; 
+            height: 200px;
+            padding-top: 45px; 
+            color: rgb(234, 238, 238);">
+    <h1>Flask SmartFrame</h1>
+    <p>A simple app to make life simpler...</p>
+    {{ url_for('login', token=token, _external=True) }}
+</div>
+
 <p>Dear person,</p>
 <p>
     To reset your password
@@ -5,6 +15,7 @@
         click here
     </a>.
 </p>
+
 <p>Alternatively, you can paste the following link in your browser's address bar:</p>
 <p>If you have not requested a password reset simply ignore this message.</p>
 <p>Sincerely,</p>

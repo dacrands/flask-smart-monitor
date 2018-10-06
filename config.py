@@ -3,6 +3,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class Config(object):
+    ADMIN = os.environ.get('ADMIN') or 'davecrands@gmail.com'
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'secret-secrets-are-no-fun'
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, 'app.db')
