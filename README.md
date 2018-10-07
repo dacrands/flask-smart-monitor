@@ -39,7 +39,7 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY') || 'get-your-own'
+    SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY') or 'get-your-own'
     WEATHER_API_KEY = os.environ.get('WEATHER_API_KEY') or 'nice-try'
     LONGITUDE = os.environ.get('LONGITUDE') or 0.0
     LATITUDE = os.environ.get('LATITUDE') or 0.0
