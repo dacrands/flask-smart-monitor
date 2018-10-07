@@ -88,7 +88,7 @@ def register():
         token = user.get_email_token()
         send_email('welcome@crandall.com', 
                'Email confirmation!', 
-               app.config['ADMIN'], 
+               user.email, 
                render_template('email.html', token=token))
         flash('Thanks! We just sent an email confirmation.')        
         return redirect(url_for('login'))
