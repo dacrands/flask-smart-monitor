@@ -31,24 +31,26 @@ def index():
 
 
 @app.route('/about')
-def about():
-    
+def about():    
     return render_template('about.html')
-
-# @app.route('/email')
-# def email():
-    
-#     send_email('welcome@crandall.com', 
-#                'This is a test', 
-#                'davecrands@gmail.com', 
-#                render_template('email.html', token=token))
-#     flash('An email was sent....')
-#     return render_template('/login')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
+
+    token = request.args.get('token')
+    if token:
+        user_id = User.verify_email_token(token)
+        if type(user_id) == None:
+            flash('You stink!')
+            return redirect(url_for('index'))
+        user = User.query.get(user_id)
+        user.set_verify(True)
+        db.session.commit()
+        login_user(user)
+        return redirect(url_for('index'))
+    
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
@@ -65,18 +67,6 @@ def login():
         return redirect(next_page)
     return render_template('login.html', form=form)
 
-@app.route('/login/<token>')
-def ver_token(token):
-    user_id = User.verify_email_token(token)
-    if type(user_id) == None:
-        flash('You stink!')
-        return redirect(url_for('index'))
-    user = User.query.get(user_id)
-    user.set_verify(True)
-    print(user.is_verified)
-    db.session.commit()
-    login_user(user)
-    return redirect(url_for('index'))
 
 
 @app.route('/logout')

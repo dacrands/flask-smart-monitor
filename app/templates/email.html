@@ -1,22 +1,21 @@
-<div style="background: rgb(16, 107, 103); 
+<div style="color: rgb(16, 107, 103); 
             text-align: center; 
             height: 200px;
             padding-top: 45px; 
-            color: rgb(234, 238, 238);">
+            background: rgb(234, 238, 238);">
     <h1>Flask SmartFrame</h1>
-    <p>A simple app to make life simpler...</p>
-    {{ url_for('login', token=token, _external=True) }}
+    <p>A simple app to make life simpler...</p>    
 </div>
 
-<p>Dear person,</p>
-<p>
-    To reset your password
-    <a href="{{ url_for('index') }}">
-        click here
-    </a>.
-</p>
+<p>Hello,</p>
+
+<p>Please verify your email!</p>
+<a href="{{ url_for('login', token=token, _external=True) }}">
+    Verify
+</a>.
 
 <p>Alternatively, you can paste the following link in your browser's address bar:</p>
+{{ url_for('login', token=token, _external=True) }}
 <p>If you have not requested a password reset simply ignore this message.</p>
 <p>Sincerely,</p>
 <p>The Microblog Team</p>

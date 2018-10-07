@@ -25,7 +25,7 @@ class User(UserMixin, db.Model):
     def get_email_token(self, expires_in=600):
         return jwt.encode(
             {'verify_email': self.id, 'exp': time() + expires_in},
-            app.config['SECRET-KEY'], algorithm='HS256').decode('utf-8')        
+            app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')        
     
     def set_verify(self, authBool):
         self.is_verified = authBool
@@ -33,7 +33,7 @@ class User(UserMixin, db.Model):
     @staticmethod
     def verify_email_token(token):
         try:            
-            jwt_id = jwt.decode(token, app.config['SECRET-KEY'],
+            jwt_id = jwt.decode(token, app.config['SECRET_KEY'],
                             algorithms=['HS256'])['verify_email']   
         except:
             return None
