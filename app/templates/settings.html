@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main class="container">
+    <h1>Config</h1>
+    <section class="settings__stocks">
+      <h3>Your stocks: </h3>
+        <ul>
+          {% for stock in stocks %}
+            <li>{{stock}}</li>
+          {% endfor %}
+        </ul>
+    </section>
+        
+    <form action="" method="post">
+      {{ form.hidden_tag() }}
+      <p>
+        {{ form.symbol.label }} <br>
+        {{ form.symbol(size=8) }} <br>
+        {% for err in form.symbol.errors %}
+        <span class="error">Stock: {{ err }}</span>
+        {% endfor %}
+      </p>
+      <p class=>{{ form.submit() }}</p>
+    </form>
+
+    <a href="/">Back</a>
+  </main>
+
+
+{% endblock %}
