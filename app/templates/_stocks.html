@@ -1,6 +1,7 @@
 <div class="ticker">
+
   <section class="stocks">  
-    {% for stock in ['F', 'FB', 'AAPL', 'VT', 'SIRI', 'AMD', 'FIT'] %}
+    {% for stock in stocksData %}
       <div class="stocks__quote">
         <strong>
           <p>{{ stocksData[stock]['quote']['companyName'] }}</p>

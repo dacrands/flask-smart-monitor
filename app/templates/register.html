@@ -11,7 +11,7 @@
       {{ form.username.label }} <br>
       {{ form.username(size=32) }} <br>
       {% for err in form.username.errors %}
-      <span>[{{ err }}]</span>
+      <span class="error">{{ err }}</span>
       {% endfor %}
     </p>
     <!-- Email -->

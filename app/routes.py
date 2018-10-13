@@ -14,7 +14,7 @@ stockStr = ','.join(stockList).rstrip(',')
 WEATHER_URL = "https://api.darksky.net/forecast/{0}/{1},{2}".format(
     app.config['WEATHER_API_KEY'], app.config['LATITUDE'], app.config['LONGITUDE'])
 STOCKS_URL = "https://api.iextrading.com/1.0/stock/market/batch?symbols={0}&types=quote,news,chart&range=1m&last=10".format(
-    stockStr)
+   stockStr)
 
 
 @app.route('/')
@@ -22,10 +22,18 @@ STOCKS_URL = "https://api.iextrading.com/1.0/stock/market/batch?symbols={0}&type
 @login_required
 def index():
     weatherRes = requests.get(WEATHER_URL)
-    weatherJson = weatherRes.json()
+    if weatherRes.status_code != 200:
+        weatherJson = False
+    else:
+        weatherJson = weatherRes.json()
 
     stocksRes = requests.get(STOCKS_URL)
-    stocksJson = stocksRes.json()
+    print(stocksRes.status_code)
+    if stocksRes.status_code != 200:
+        stocksJson = False
+    else:
+        stocksJson = stocksRes.json()
+    
 
     return render_template('index.html', weatherData=weatherJson, stocksData=stocksJson, YTembed=app.config['YT_EMBED'])
 
