@@ -12,7 +12,8 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String, index=True, unique=True)
     password_hash = db.Column(db.String(128))
     is_verified = db.Column(db.Boolean, unique=False, default=False)
-
+    stocks = db.relationship('Stock', backref='author', lazy='dynamic')
+    
     def __repr__(self):
         return '<User {}>'.format(self.username)
 
@@ -39,7 +40,13 @@ class User(UserMixin, db.Model):
             return None
         return jwt_id
         
+class Stock (db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    symbol = db.Column(db.String(20))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
+    def __repr__(self):
+        return '<Post {}>'.format(self.symbol)
 
 @login.user_loader
 def load_user(id):

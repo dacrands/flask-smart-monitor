@@ -4,23 +4,29 @@ from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
 
 from app import app, db
-from app.forms import LoginForm, RegistrationForm
-from app.models import User
+from app.forms import StockForm, LoginForm, RegistrationForm
+from app.models import User, Stock
 from app.email import send_email
 
-stockList = ["f", "fb", "aapl", "vt", "siri", "amd", "fit", "tsla"]
-stockStr = ','.join(stockList).rstrip(',')
+# stockList = ["f", "fb", "aapl", "vt", "siri", "amd", "fit", "tsla"]
 
 WEATHER_URL = "https://api.darksky.net/forecast/{0}/{1},{2}".format(
     app.config['WEATHER_API_KEY'], app.config['LATITUDE'], app.config['LONGITUDE'])
-STOCKS_URL = "https://api.iextrading.com/1.0/stock/market/batch?symbols={0}&types=quote,news,chart&range=1m&last=10".format(
-   stockStr)
 
 
 @app.route('/')
 @app.route('/index')
 @login_required
 def index():
+
+    userStocks = current_user.stocks.all()
+    stockList = [stock.symbol for stock in userStocks]
+    
+    stockStr = ','.join(stockList).rstrip(',')
+
+    STOCKS_URL = "https://api.iextrading.com/1.0/stock/market/batch?symbols={0}&types=quote,news,chart&range=1m&last=10".format(
+       stockStr)
+
     weatherRes = requests.get(WEATHER_URL)
     if weatherRes.status_code != 200:
         weatherJson = False
@@ -28,7 +34,6 @@ def index():
         weatherJson = weatherRes.json()
 
     stocksRes = requests.get(STOCKS_URL)
-    print(stocksRes.status_code)
     if stocksRes.status_code != 200:
         stocksJson = False
     else:
@@ -37,6 +42,19 @@ def index():
 
     return render_template('index.html', weatherData=weatherJson, stocksData=stocksJson, YTembed=app.config['YT_EMBED'])
 
+
+@app.route('/settings', methods=['GET', 'POST'])
+def settings():
+    userStocks = current_user.stocks.all()
+    stockList = [stock.symbol for stock in userStocks]
+
+    form = StockForm()
+    if form.validate_on_submit():
+        stock = Stock(symbol=form.symbol.data, author=current_user)
+        db.session.add(stock)
+        db.session.commit()
+        return render_template('settings.html', stocks=stockList, form=form)        
+    return render_template('settings.html', stocks=stockList, form=form)
 
 @app.route('/about')
 def about():    
