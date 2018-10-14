@@ -17,13 +17,15 @@ code {
 }
 
 
-
+.settings {
+  margin-bottom: 3rem;
+}
 .settings ul {
   /* outline: 4px solid red; */
   
   /* border: 1px solid rgb(22, 155, 152); */
   list-style: none;
-  padding: none;
+  padding: 0;
 }
 
 .settings ul h3 {
@@ -55,6 +57,10 @@ code {
   font-weight: 100;
 }
 
+.primary {
+  color: rgb(22, 155, 152);
+}
+
 
 
 /* ===============
@@ -75,7 +81,7 @@ code {
   max-width: 100%;
 }
 
-.container h1 {
+.container__item h1 {
   color: rgb(22, 155, 152);
 }
 
@@ -206,6 +212,12 @@ input[type=submit] {
   border-radius: 3px;
   padding: 0.5rem;
   cursor: pointer;
+  transition: all 150ms ease;
+}
+
+input[type=submit]:hover {
+  background: rgb(39, 119, 194);
+  color: #ffff;
 }
 
 .error {

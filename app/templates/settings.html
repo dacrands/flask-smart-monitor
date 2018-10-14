@@ -2,12 +2,13 @@
 
 {% block content %}
 <main class="container">
-  <header class="header">
+  <header class="header primary">
     <h1>Settings</h1>
   </header>
 
-  <section class="settings">
-    <h2 class="font-light">Your stocks: </h2>
+  <div class="settings">
+    <h1 class="font-light">Stocks</h1>
+    <!-- <h2 class="font-light">Your stocks: </h2> -->
     <ul>
       {% for stock in stocks %}
       <li>
@@ -18,7 +19,7 @@
       {% endfor %}
     </ul>
     <form action="" method="post">
-      <h2 class="font-light">Add a stock: </h2>
+      <!-- <h3 class="font-light">Add a stock: </h3> -->
       {{ stockForm.hidden_tag() }}
       <p>
         {{ stockForm.symbol.label }}
@@ -29,10 +30,11 @@
       </p>
       <p class=>{{ stockForm.submit() }}</p>
     </form>
-  </section>
-  <section class="settings">
+  </div>
+  <div class="settings">
     <form action="" method="post">
-      <h2 class="font-light">Location: {{lat, lon}} </h2>
+      <h1 class="font-light">Location</h1>
+      <h3 class="primary">{{lat, lon}} </h3>
       {{ locationForm.hidden_tag() }}
       <p>
         {{ locationForm.lat.label }}
@@ -43,7 +45,7 @@
       </p>
       <p class=>{{ locationForm.submit() }}</p>
     </form>
-  </section>
+  </div>
 
 
 

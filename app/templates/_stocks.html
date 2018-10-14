@@ -1,7 +1,7 @@
 <div class="ticker">
 
   <section class="stocks">  
-      {% if weatherData %}
+      
     {% for stock in stocksData %}
       <div class="stocks__quote">
         <strong>
@@ -10,6 +10,6 @@
         <p>{{ stocksData[stock]['quote']['latestPrice'] }}</p>
       </div>  
     {% endfor %}
-    {% endif %}
+    
   </section>
 </div>  

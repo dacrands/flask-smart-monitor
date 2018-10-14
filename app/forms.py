@@ -7,7 +7,7 @@ class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     remember_me = BooleanField('Remember me')
-    submit = SubmitField('Sign In')
+    submit = SubmitField('Sign In \u203A')
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
@@ -15,7 +15,7 @@ class RegistrationForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField(
         'Repeat Password', validators=[DataRequired(), EqualTo('password')])
-    submit = SubmitField('Register')
+    submit = SubmitField('Register \u203A')
 
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
@@ -28,11 +28,11 @@ class RegistrationForm(FlaskForm):
             raise ValidationError('Please use a different email address.')
 
 class StockForm(FlaskForm):
-    symbol = StringField('Symbol', validators=[DataRequired()])
-    submit = SubmitField('Add stock')
+    symbol = StringField('Enter ticker symbol: ', validators=[DataRequired()])
+    submit = SubmitField('Add stock \u203A')
 
 
 class LocationForm(FlaskForm):
-    lat = FloatField('Latitude', validators=[DataRequired()])
-    lon = FloatField('Longitude', validators=[DataRequired()])
-    submit = SubmitField('Set location')
+    lat = FloatField('Latitude: ', validators=[DataRequired()])
+    lon = FloatField('Longitude: ', validators=[DataRequired()])
+    submit = SubmitField('Set location \u203A')
