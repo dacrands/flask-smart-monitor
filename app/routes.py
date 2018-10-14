@@ -38,7 +38,7 @@ def index():
 
     stocksRes = requests.get(STOCKS_URL)
     if stocksRes.status_code != 200:
-        stocksJson = False
+        stocksJson = []
     else:
         stocksJson = stocksRes.json()
 
