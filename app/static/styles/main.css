@@ -16,6 +16,47 @@ code {
   border-radius: 3px;
 }
 
+
+
+.settings ul {
+  /* outline: 4px solid red; */
+  
+  /* border: 1px solid rgb(22, 155, 152); */
+  list-style: none;
+  padding: none;
+}
+
+.settings ul h3 {
+  margin: .5rem;
+}
+
+.settings a {
+  font-size: .7rem;
+  color: rgb(22, 155, 152);
+}
+
+.settings a:hover {
+  color: rgb(211, 40, 54);
+}
+
+.settings li {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
+  box-shadow: 0 0 3px rgba(0,0,0,0.3);
+  border-radius: 2px;
+  text-align: center;
+}
+
+/* ===============
+    HELPER
+================*/
+.font-light{
+  font-weight: 100;
+}
+
+
+
 /* ===============
     CONTAINER
 ================*/
@@ -158,7 +199,7 @@ code {
 
 }
 
-.form__container input[type=submit] {
+input[type=submit] {
   background: #ffff;
   border: 1px solid rgb(39, 119, 194);
   color: rgb(39, 119, 194);

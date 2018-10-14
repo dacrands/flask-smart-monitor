@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, FloatField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 from app.models import User
 
@@ -30,3 +30,9 @@ class RegistrationForm(FlaskForm):
 class StockForm(FlaskForm):
     symbol = StringField('Symbol', validators=[DataRequired()])
     submit = SubmitField('Add stock')
+
+
+class LocationForm(FlaskForm):
+    lat = FloatField('Latitude', validators=[DataRequired()])
+    lon = FloatField('Longitude', validators=[DataRequired()])
+    submit = SubmitField('Set location')

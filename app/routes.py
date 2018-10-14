@@ -4,7 +4,7 @@ from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
 
 from app import app, db
-from app.forms import StockForm, LoginForm, RegistrationForm
+from app.forms import StockForm, LoginForm, RegistrationForm, LocationForm
 from app.models import User, Stock
 from app.email import send_email
 
@@ -21,12 +21,15 @@ def index():
 
     userStocks = current_user.stocks.all()
     stockList = [stock.symbol for stock in userStocks]
-    
+
     stockStr = ','.join(stockList).rstrip(',')
 
     STOCKS_URL = "https://api.iextrading.com/1.0/stock/market/batch?symbols={0}&types=quote,news,chart&range=1m&last=10".format(
-       stockStr)
+        stockStr)
 
+    WEATHER_URL = "https://api.darksky.net/forecast/{0}/{1},{2}".format(
+    app.config['WEATHER_API_KEY'], current_user.latitude, current_user.longitude)
+    print(WEATHER_URL)
     weatherRes = requests.get(WEATHER_URL)
     if weatherRes.status_code != 200:
         weatherJson = False
@@ -38,27 +41,53 @@ def index():
         stocksJson = False
     else:
         stocksJson = stocksRes.json()
-    
 
     return render_template('index.html', weatherData=weatherJson, stocksData=stocksJson, YTembed=app.config['YT_EMBED'])
 
 
 @app.route('/settings', methods=['GET', 'POST'])
+@login_required
 def settings():
     userStocks = current_user.stocks.all()
     stockList = [stock.symbol for stock in userStocks]
+    (lat, lon) = (current_user.latitude, current_user.longitude)
 
-    form = StockForm()
-    if form.validate_on_submit():
-        stock = Stock(symbol=form.symbol.data, author=current_user)
+    locationForm = LocationForm()
+    if locationForm.validate_on_submit():
+        current_user.set_location(locationForm.lat.data, locationForm.lon.data)
+        db.session.commit()
+        flash('Updated location.')
+        return redirect('/settings')
+
+    stockForm = StockForm()
+    if stockForm.validate_on_submit():
+        stock = Stock(symbol=stockForm.symbol.data, author=current_user)
         db.session.add(stock)
         db.session.commit()
-        return render_template('settings.html', stocks=stockList, form=form)        
-    return render_template('settings.html', stocks=stockList, form=form)
+        flash('Added stock!')
+        return redirect('/settings')
+
+    return render_template('settings.html', stocks=stockList, stockForm=stockForm, locationForm=locationForm, lat=lat, lon=lon)
+
+
+@app.route('/settings/<stock>', methods=['GET', 'POST'])
+@login_required
+def removeStock(stock):
+    userStocks = current_user.stocks.all()
+    for _stock in userStocks:
+        if _stock.symbol == stock:
+            db.session.delete(_stock)
+            db.session.commit()
+            flash('Removed stock!')
+            return redirect('/settings')
+    flash('Stock not found')
+    return redirect('/settings')
+
 
 @app.route('/about')
-def about():    
+def about():
     return render_template('about.html')
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -76,7 +105,7 @@ def login():
         db.session.commit()
         login_user(user)
         return redirect(url_for('index'))
-    
+
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
@@ -92,7 +121,6 @@ def login():
             next_page = url_for('index')
         return redirect(next_page)
     return render_template('login.html', form=form)
-
 
 
 @app.route('/logout')
@@ -112,10 +140,10 @@ def register():
         db.session.add(user)
         db.session.commit()
         token = user.get_email_token()
-        send_email('welcome@crandall.com', 
-               'Email confirmation!', 
-               user.email, 
-               render_template('email.html', token=token))
-        flash('Thanks! We just sent an email confirmation.')        
+        send_email('welcome@crandall.com',
+                   'Email confirmation!',
+                   user.email,
+                   render_template('email.html', token=token))
+        flash('Thanks! We just sent an email confirmation.')
         return redirect(url_for('login'))
     return render_template('register.html', form=form)

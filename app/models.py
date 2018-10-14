@@ -12,6 +12,8 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String, index=True, unique=True)
     password_hash = db.Column(db.String(128))
     is_verified = db.Column(db.Boolean, unique=False, default=False)
+    latitude = db.Column(db.String(64), default=0.0)
+    longitude = db.Column(db.String(64), default=0.0)
     stocks = db.relationship('Stock', backref='author', lazy='dynamic')
     
     def __repr__(self):
@@ -23,6 +25,10 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
     
+    def set_location(self, lat, lon):
+        (self.latitude, self.longitude) = (lat, lon)
+    
+
     def get_email_token(self, expires_in=600):
         return jwt.encode(
             {'verify_email': self.id, 'exp': time() + expires_in},
@@ -41,8 +47,8 @@ class User(UserMixin, db.Model):
         return jwt_id
         
 class Stock (db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    symbol = db.Column(db.String(20))
+    id = db.Column(db.Integer, index=True, primary_key=True)
+    symbol = db.Column(db.String(20), index=True, unique=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
