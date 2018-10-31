@@ -120,7 +120,7 @@ def login():
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('index')
         return redirect(next_page)
-    return render_template('login.html', form=form)
+    return render_template('auth/login.html', form=form)
 
 
 @app.route('/logout')
@@ -142,7 +142,7 @@ def new_password(token):
         user.set_password(form.password.data)
         db.session.commit()
         return redirect(url_for('login'))
-    return render_template('new_password.html', form=form)
+    return render_template('auth/new_password.html', form=form)
 
 
 @app.route('/reset_password', methods=['GET', 'POST'])
@@ -157,10 +157,10 @@ def reset_password():
             reset_email('reset@crandall.com',
                         'Reset Password',
                         user.email,
-                        render_template('reset_email.html', token=token))
+                        render_template('email/reset_email.html', token=token))
             flash('Thanks! We just sent a reset link.')
             return redirect(url_for('login'))
-    return render_template('reset_password.html', form=form)
+    return render_template('auth/reset_password.html', form=form)
 
 
 
@@ -178,7 +178,7 @@ def register():
         auth_email('welcome@crandall.com',
                    'Email confirmation!',
                    user.email,
-                   render_template('reg_email.html', token=token))
+                   render_template('email/reg_email.html', token=token))
         flash('Thanks! We just sent an email confirmation.')
         return redirect(url_for('login'))
-    return render_template('register.html', form=form)
+    return render_template('auth/register.html', form=form)
