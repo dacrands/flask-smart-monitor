@@ -27,6 +27,16 @@ class RegistrationForm(FlaskForm):
         if user is not None:
             raise ValidationError('Please use a different email address.')
 
+class ResetPasswordForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    submit = SubmitField('Reset \u203A')
+
+class NewPasswordForm(FlaskForm):
+    password = PasswordField('Password', validators=[DataRequired()])
+    password2 = PasswordField(
+        'Repeat Password', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Reset \u203A')
+
 class StockForm(FlaskForm):
     symbol = StringField('Enter ticker symbol: ', validators=[DataRequired()])
     submit = SubmitField('Add stock \u203A')

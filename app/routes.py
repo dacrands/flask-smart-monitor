@@ -4,9 +4,9 @@ from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
 
 from app import app, db
-from app.forms import StockForm, LoginForm, RegistrationForm, LocationForm
+from app.forms import StockForm, LoginForm, RegistrationForm, LocationForm, ResetPasswordForm, NewPasswordForm
 from app.models import User, Stock
-from app.email import send_email
+from app.email import auth_email, reset_email
 
 # stockList = ["f", "fb", "aapl", "vt", "siri", "amd", "fit", "tsla"]
 
@@ -128,6 +128,43 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
+@app.route('/new_password/<token>', methods=['GET', 'POST'])
+def new_password(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    user_id = User.verify_email_token(token)
+    if type(user_id) == None:
+            flash('You stink!')
+            return redirect(url_for('index'))
+    user = User.query.get(user_id)
+    if not user:
+        return redirect(url_for('index'))
+    form = NewPasswordForm()
+    if form.validate_on_submit():
+        user.set_password(form.password.data)
+        db.session.commit()
+        return redirect(url_for('login'))
+    return render_template('new_password.html', form=form)
+
+
+@app.route('/reset_password', methods=['GET', 'POST'])
+def reset_password():
+    if current_user.is_authenticated:
+        return redirect(url_for('/'))
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        token = user.get_email_token()
+        if user:
+            reset_email('reset@crandall.com',
+                        'Reset Password',
+                        user.email,
+                        render_template('reset_email.html', token=token))
+            flash('Thanks! We just sent a reset link.')
+            return redirect(url_for('login'))
+    return render_template('reset_password.html', form=form)
+
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -140,10 +177,10 @@ def register():
         db.session.add(user)
         db.session.commit()
         token = user.get_email_token()
-        send_email('welcome@crandall.com',
+        auth_email('welcome@crandall.com',
                    'Email confirmation!',
                    user.email,
-                   render_template('email.html', token=token))
+                   render_template('reg_email.html', token=token))
         flash('Thanks! We just sent an email confirmation.')
         return redirect(url_for('login'))
     return render_template('register.html', form=form)

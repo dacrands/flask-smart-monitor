@@ -1,6 +1,5 @@
 <div style="color: rgb(16, 107, 103); 
-            text-align: center; 
-            height: 200px;
+            text-align: center;         
             padding-top: 45px; 
             background: rgb(234, 238, 238);">
     <h1>Flask SmartFrame</h1>
@@ -9,9 +8,9 @@
 
 <p>Hello,</p>
 
-<p>Please verify your email!</p>
-<a href="{{ url_for('login', token=token, _external=True) }}">
-    Verify
+<p>Please reset your password!</p>
+<a href="{{ url_for('new_password', token=token, _external=True) }}">
+    Reset password
 </a>.
 
 <p>Alternatively, you can paste the following link in your browser's address bar:</p>
