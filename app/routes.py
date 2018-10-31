@@ -130,8 +130,6 @@ def logout():
 
 @app.route('/new_password/<token>', methods=['GET', 'POST'])
 def new_password(token):
-    if current_user.is_authenticated:
-        return redirect(url_for('index'))
     user_id = User.verify_email_token(token)
     if type(user_id) == None:
             flash('You stink!')
