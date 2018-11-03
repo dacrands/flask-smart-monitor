@@ -72,6 +72,15 @@ code {
   margin-bottom: 2rem;
 }
 
+.error {
+  background: rgb(219, 73, 85);
+  color: #f9f9f9;
+  padding: 0.5rem;  
+  display: inline-block;
+  margin: 1rem 0;
+  border-radius: 3px;
+}
+
 
 /* ===============
     CONTAINER
@@ -201,8 +210,6 @@ code {
       FORM
 ================*/
 .form__container {
-  
-  /* margin: 0 auto; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -233,26 +240,12 @@ input[type=submit]:hover {
   color: #ffff;
 }
 
-.error {
-  background: rgb(219, 73, 85);
-  color: #f9f9f9;
-  padding: 0.5rem;
-  /* margin: 1rem; */
-  display: inline-block;
-  margin: 1rem 0;
-  border-radius: 3px;
-}
+
 
 /* ===============
     DASHBOARD
 ================*/
 .dash {
-  /* display: flex; */
-  /* justify-content: space-between; */
-  /* height: 5rem; */
-  /* display: grid; */
-  /* grid-template-columns: 350px 1fr; */
-  /* grid-auto-rows: 80px; */
   display: flex;
   height: min-content;
   padding: .45rem;
