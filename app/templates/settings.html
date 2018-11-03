@@ -6,8 +6,11 @@
     <h1>Settings</h1>
   </header>
 
+  <div class="crumbs">
+    <a href="/">Home</a> / <a href="/settings">Settings</a>
+  </div>
   <div class="settings">
-    <h1 class="font-light">Stocks</h1>
+    <h1 class="primary">Stocks</h1>
     <!-- <h2 class="font-light">Your stocks: </h2> -->
     <ul>
       {% for stock in stocks %}
@@ -35,8 +38,8 @@
 
   <div class="settings">
     <form action="" method="post">
-      <h1 class="font-light">Location</h1>
-      <h3 class="primary">{{lat, lon}} </h3>
+      <h1 class="primary">Location</h1>
+      <h3 class="font-light">{{lat, lon}} </h3>
       {{ locationForm.hidden_tag() }}
       <p>
         {{ locationForm.lat.label }}
@@ -57,8 +60,8 @@
 
 
   <div class="settings">
-      <h1 class="font-light">Todo</h1>
-      <h3 class="primary">Add a todo </h3>
+      <h1 class="primary">Todo</h1>
+      <h3 class="font-light">What do you have to do?</h3>
       <ul>
         {% for todo in todos %}
         <li>
@@ -81,8 +84,10 @@
   </div>
 
 
-
-  <a href="/">&larr; Back</a>
+  <div class="back">
+    <a href="/">&larr; Back</a>
+  </div>
+  
 </main>
 
 
