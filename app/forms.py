@@ -41,6 +41,10 @@ class StockForm(FlaskForm):
     symbol = StringField('Enter ticker symbol: ', validators=[DataRequired()])
     submit = SubmitField('Add stock \u203A')
 
+class TodoForm(FlaskForm):
+    todo = StringField('Enter todo: ', validators=[DataRequired()])
+    submit = SubmitField('Add todo \u203A')
+
 
 class LocationForm(FlaskForm):
     lat = FloatField('Latitude: ', validators=[DataRequired()])

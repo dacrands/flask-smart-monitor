@@ -4,11 +4,10 @@ from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
 
 from app import app, db
-from app.forms import StockForm, LoginForm, RegistrationForm, LocationForm, ResetPasswordForm, NewPasswordForm
-from app.models import User, Stock
+from app.forms import TodoForm, StockForm, LoginForm, RegistrationForm, \
+                      LocationForm, ResetPasswordForm, NewPasswordForm
+from app.models import User, Stock, Todo
 from app.email import auth_email, reset_email
-
-# stockList = ["f", "fb", "aapl", "vt", "siri", "amd", "fit", "tsla"]
 
 WEATHER_URL = "https://api.darksky.net/forecast/{0}/{1},{2}".format(
     app.config['WEATHER_API_KEY'], app.config['LATITUDE'], app.config['LONGITUDE'])
@@ -29,7 +28,7 @@ def index():
 
     WEATHER_URL = "https://api.darksky.net/forecast/{0}/{1},{2}".format(
         app.config['WEATHER_API_KEY'], current_user.latitude, current_user.longitude)
-    print(WEATHER_URL)
+    
     weatherRes = requests.get(WEATHER_URL)
     if weatherRes.status_code != 200:
         weatherJson = False
@@ -42,15 +41,23 @@ def index():
     else:
         stocksJson = stocksRes.json()
 
-    return render_template('index.html', weatherData=weatherJson, stocksData=stocksJson, YTembed=app.config['YT_EMBED'])
+    return render_template('index.html', 
+                            weatherData=weatherJson, 
+                            stocksData=stocksJson, 
+                            YTembed=app.config['YT_EMBED'])
 
 
 @app.route('/settings', methods=['GET', 'POST'])
 @login_required
 def settings():
+    (lat, lon) = (current_user.latitude, current_user.longitude)
+    
     userStocks = current_user.stocks.all()
     stockList = [stock.symbol for stock in userStocks]
-    (lat, lon) = (current_user.latitude, current_user.longitude)
+
+    userTodos = current_user.todos.all()
+    todoList = [(todo.id, todo.todo) for todo in userTodos]
+    
 
     locationForm = LocationForm()
     if locationForm.validate_on_submit():
@@ -67,7 +74,22 @@ def settings():
         flash('Added stock!')
         return redirect('/settings')
 
-    return render_template('settings.html', stocks=stockList, stockForm=stockForm, locationForm=locationForm, lat=lat, lon=lon)
+    todoForm = TodoForm()
+    if todoForm.validate_on_submit():
+        todo = Todo(todo=todoForm.todo.data, author=current_user)
+        db.session.add(todo)
+        db.session.commit()
+        flash('Added todo!')
+        return redirect('/settings')
+
+    return render_template('settings.html', 
+                            stocks=stockList, 
+                            stockForm=stockForm,
+                            todoForm=todoForm, 
+                            todos=todoList,
+                            locationForm=locationForm, 
+                            lat=lat, 
+                            lon=lon)
 
 
 @app.route('/settings/<stock>', methods=['GET', 'POST'])
@@ -81,6 +103,19 @@ def removeStock(stock):
             flash('Removed stock!')
             return redirect('/settings')
     flash('Stock not found')
+    return redirect('/settings')
+
+@app.route('/settings/todo/<todo_id>', methods=['GET', 'POST'])
+@login_required
+def removeTodo(todo_id):
+    userTodos = current_user.todos.all()
+    for todo in userTodos:
+        if todo.id == int(todo_id):
+            db.session.delete(todo)
+            db.session.commit()
+            flash('Removed Todo!')
+            return redirect('/settings')
+    flash('Todo not found!')
     return redirect('/settings')
 
 

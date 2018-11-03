@@ -31,6 +31,8 @@
       <p class=>{{ stockForm.submit() }}</p>
     </form>
   </div>
+
+
   <div class="settings">
     <form action="" method="post">
       <h1 class="font-light">Location</h1>
@@ -44,6 +46,28 @@
         {{ locationForm.lon(size=4) }}
       </p>
       <p class=>{{ locationForm.submit() }}</p>
+    </form>
+  </div>
+
+
+  <div class="settings">
+      <h1 class="font-light">Todo</h1>
+      <h3 class="primary">Add a todo </h3>
+      <ul>
+        {% for todo in todos %}
+        <li>
+          <p>{{todo[-1]}}</p>
+          <a href="/settings/todo/{{todo[0]}}">Remove stock</a>
+        </li>
+        {% endfor %}
+    </ul>
+    <form action="" method="post">      
+      {{ todoForm.hidden_tag() }}
+      <p>
+        {{ todoForm.todo.label }}
+        {{ todoForm.todo(size=32) }}
+      </p>
+      <p class=>{{ todoForm.submit() }}</p>
     </form>
   </div>
 

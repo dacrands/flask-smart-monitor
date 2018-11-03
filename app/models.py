@@ -15,6 +15,7 @@ class User(UserMixin, db.Model):
     latitude = db.Column(db.String(64), default=0.0)
     longitude = db.Column(db.String(64), default=0.0)
     stocks = db.relationship('Stock', backref='author', lazy='dynamic')
+    todos = db.relationship('Todo', backref='author', lazy='dynamic')
     
     def __repr__(self):
         return '<User {}>'.format(self.username)
@@ -53,6 +54,15 @@ class Stock (db.Model):
     def __repr__(self):
         return '<Post {}>'.format(self.symbol)
 
+class Todo (db.Model):
+    id = db.Column(db.Integer, index=True, primary_key=True)
+    todo = db.Column(db.String(20), index=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    def __repr__(self):
+        return '<Todo {}>'.format(self.todo)
+
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
+    
