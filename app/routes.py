@@ -17,7 +17,7 @@ WEATHER_URL = "https://api.darksky.net/forecast/{0}/{1},{2}".format(
 @app.route('/index')
 @login_required
 def index():
-
+    todoForm = TodoForm()
     todos = current_user.todos.all()
     userStocks = current_user.stocks.all()
     stockList = [stock.symbol for stock in userStocks]
@@ -44,6 +44,7 @@ def index():
 
     return render_template('index.html', 
                             todos = todos,
+                            todoForm = todoForm,
                             weatherData=weatherJson, 
                             stocksData=stocksJson, 
                             YTembed=app.config['YT_EMBED'])

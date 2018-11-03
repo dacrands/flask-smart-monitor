@@ -271,20 +271,39 @@ input[type=submit]:hover {
     TODO
 ================*/
 .todo {
-  background: rgba(34, 33, 33, 0.685);
+  background: rgba(34, 33, 33, 0.785);
   color: #e1e8ee;  
   position: absolute;
-  padding: 0 .25rem;
+  /* padding: .5rem; */
+  border-radius: 5px;
   /* background: white; */
   /* display: flex; */
   cursor: move;
   width: 300px;  
   z-index: 9;
-  top: 100px;
+  top: 100px;  
 }
+
+.todo__item {
+  padding: .5rem;
+  background: rgb(22, 155, 152);
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  text-transform: uppercase;
+}
+
+.todo ul {
+  list-style: decimal;
+  /* padding: 0; */
+  /* list-style: none; */
+}
+
 
 .todo li {
   color: #e1e8ee;  
+  /* padding: .35rem .5rem; */
+  margin-bottom: .5rem;
+  /* border-top: 1px solid rgb(22, 155, 152); */
 }
 
 
@@ -292,6 +311,7 @@ input[type=submit]:hover {
   color: red;
   margin-left: 5px;
   font-weight: bold;
+  text-decoration: none;
 }
 
 
