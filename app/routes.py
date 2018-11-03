@@ -28,7 +28,7 @@ def index():
         stockStr)
 
     WEATHER_URL = "https://api.darksky.net/forecast/{0}/{1},{2}".format(
-    app.config['WEATHER_API_KEY'], current_user.latitude, current_user.longitude)
+        app.config['WEATHER_API_KEY'], current_user.latitude, current_user.longitude)
     print(WEATHER_URL)
     weatherRes = requests.get(WEATHER_URL)
     if weatherRes.status_code != 200:
@@ -128,12 +128,13 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
+
 @app.route('/new_password/<token>', methods=['GET', 'POST'])
 def new_password(token):
     user_id = User.verify_email_token(token)
     if type(user_id) == None:
-            flash('You stink!')
-            return redirect(url_for('index'))
+        flash('You stink!')
+        return redirect(url_for('index'))
     user = User.query.get(user_id)
     if not user:
         return redirect(url_for('index'))
@@ -152,16 +153,17 @@ def reset_password():
     form = ResetPasswordForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        token = user.get_email_token()
         if user:
+            token = user.get_email_token()
             reset_email('reset@crandall.com',
                         'Reset Password',
                         user.email,
                         render_template('email/reset_email.html', token=token))
             flash('Thanks! We just sent a reset link.')
             return redirect(url_for('login'))
+        flash('Thanks! We just sent a reset link.')
+        return redirect(url_for('login'))
     return render_template('auth/reset_password.html', form=form)
-
 
 
 @app.route('/register', methods=['GET', 'POST'])

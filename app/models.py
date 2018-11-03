@@ -27,8 +27,7 @@ class User(UserMixin, db.Model):
     
     def set_location(self, lat, lon):
         (self.latitude, self.longitude) = (lat, lon)
-    
-
+        
     def get_email_token(self, expires_in=600):
         return jwt.encode(
             {'verify_email': self.id, 'exp': time() + expires_in},
