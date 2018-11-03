@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, FloatField
-from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
+from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
 from app.models import User
 
 class LoginForm(FlaskForm):
@@ -39,14 +39,18 @@ class NewPasswordForm(FlaskForm):
 
 class StockForm(FlaskForm):
     symbol = StringField('Enter ticker symbol: ', validators=[DataRequired()])
-    submit = SubmitField('Add stock \u203A')
+    submitStock = SubmitField('Add stock \u203A')
 
 class TodoForm(FlaskForm):
-    todo = StringField('Enter todo: ', validators=[DataRequired()])
-    submit = SubmitField('Add todo \u203A')
+    todo = StringField('Enter todo: ', validators=[DataRequired(), Length(
+                                                        min=1, 
+                                                        max=250, 
+                                                        message="Todo must be between %(min)s and %(max)s \
+                                                        characters in length")])
+    submitTodo = SubmitField('Add todo \u203A')
 
 
 class LocationForm(FlaskForm):
     lat = FloatField('Latitude: ', validators=[DataRequired()])
     lon = FloatField('Longitude: ', validators=[DataRequired()])
-    submit = SubmitField('Set location \u203A')
+    submitLoc = SubmitField('Set location \u203A')

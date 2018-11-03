@@ -24,6 +24,7 @@ code {
 .settings {
   margin-bottom: 3rem;
 }
+
 .settings ul {
   /* outline: 4px solid red; */
   
@@ -251,12 +252,12 @@ input[type=submit]:hover {
 }
 
 .error {
-  background: rgb(211, 40, 54);
+  background: rgb(219, 73, 85);
   color: #f9f9f9;
   padding: 0.5rem;
   /* margin: 1rem; */
   display: inline-block;
-  margin-bottom: 1rem;
+  margin: 1rem 0;
   border-radius: 3px;
 }
 

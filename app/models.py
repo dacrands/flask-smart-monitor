@@ -56,7 +56,7 @@ class Stock (db.Model):
 
 class Todo (db.Model):
     id = db.Column(db.Integer, index=True, primary_key=True)
-    todo = db.Column(db.String(20), index=True)
+    todo = db.Column(db.String(256), index=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):

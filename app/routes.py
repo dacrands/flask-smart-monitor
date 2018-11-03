@@ -60,14 +60,14 @@ def settings():
     
 
     locationForm = LocationForm()
-    if locationForm.validate_on_submit():
+    if locationForm.submitLoc.data and locationForm.validate_on_submit():
         current_user.set_location(locationForm.lat.data, locationForm.lon.data)
         db.session.commit()
         flash('Updated location.')
         return redirect('/settings')
 
     stockForm = StockForm()
-    if stockForm.validate_on_submit():
+    if stockForm.submitStock.data and stockForm.validate_on_submit():
         stock = Stock(symbol=stockForm.symbol.data, author=current_user)
         db.session.add(stock)
         db.session.commit()
@@ -75,7 +75,7 @@ def settings():
         return redirect('/settings')
 
     todoForm = TodoForm()
-    if todoForm.validate_on_submit():
+    if todoForm.submitTodo.data and todoForm.validate_on_submit():
         todo = Todo(todo=todoForm.todo.data, author=current_user)
         db.session.add(todo)
         db.session.commit()

@@ -28,7 +28,7 @@
         <span class="error">Stock: {{ err }}</span>
         {% endfor %}
       </p>
-      <p class=>{{ stockForm.submit() }}</p>
+      <p class=>{{ stockForm.submitStock() }}</p>
     </form>
   </div>
 
@@ -41,11 +41,17 @@
       <p>
         {{ locationForm.lat.label }}
         {{ locationForm.lat(size=4) }}
+        {% for err in locationForm.lat.errors %}
+        <span class="error">Stock: {{ err }}</span>
+        {% endfor %}
         <br>
         {{ locationForm.lon.label }}
-        {{ locationForm.lon(size=4) }}
+        {{ locationForm.lon(size=4) }}        
+        {% for err in locationForm.lon.errors %}
+        <span class="error">Stock: {{ err }}</span>
+        {% endfor %}
       </p>
-      <p class=>{{ locationForm.submit() }}</p>
+      <p class=>{{ locationForm.submitLoc() }}</p>
     </form>
   </div>
 
@@ -57,7 +63,7 @@
         {% for todo in todos %}
         <li>
           <p>{{todo[-1]}}</p>
-          <a href="/settings/todo/{{todo[0]}}">Remove stock</a>
+          <a href="/settings/todo/{{todo[0]}}">Remove todo</a>
         </li>
         {% endfor %}
     </ul>
@@ -66,8 +72,11 @@
       <p>
         {{ todoForm.todo.label }}
         {{ todoForm.todo(size=32) }}
+        {% for err in todoForm.todo.errors %}
+        <span class="error">Todo: {{ err }}</span>
+        {% endfor %}
       </p>
-      <p class=>{{ todoForm.submit() }}</p>
+      <p class=>{{ todoForm.submitTodo() }}</p>
     </form>
   </div>
 
