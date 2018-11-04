@@ -1,5 +1,5 @@
 from app import app, db
-from app.models import User, Stock, Todo
+from app.models import User, Stock, Todo, Embed
 
 @app.shell_context_processor
 def make_shell_context():

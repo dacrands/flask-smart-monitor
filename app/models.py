@@ -16,6 +16,7 @@ class User(UserMixin, db.Model):
     longitude = db.Column(db.String(64), default=0.0)
     stocks = db.relationship('Stock', backref='author', lazy='dynamic')
     todos = db.relationship('Todo', backref='author', lazy='dynamic')
+    embeds = db.relationship('Embed', backref='author', lazy='dynamic')
     
     def __repr__(self):
         return '<User {}>'.format(self.username)
@@ -48,7 +49,7 @@ class User(UserMixin, db.Model):
         
 class Stock (db.Model):
     id = db.Column(db.Integer, index=True, primary_key=True)
-    symbol = db.Column(db.String(20), index=True, unique=True)
+    symbol = db.Column(db.String(20), index=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
@@ -61,6 +62,15 @@ class Todo (db.Model):
 
     def __repr__(self):
         return '<Todo {}>'.format(self.todo)
+
+class Embed(db.Model):
+    id = db.Column(db.Integer, index=True, primary_key=True)
+    embed = db.Column(db.String(40), index=True)
+    name = db.Column(db.String(40), index=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    def __repr__(self):
+        return '<Embed {}>'.format(self.embed)
 
 @login.user_loader
 def load_user(id):
