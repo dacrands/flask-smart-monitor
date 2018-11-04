@@ -274,7 +274,8 @@ input[type=submit]:hover {
   cursor: move;
   width: 300px;  
   z-index: 9;
-  top: 100px;  
+  top: 100px;
+  right: 0;  
 }
 
 .todo__item {
@@ -345,10 +346,11 @@ input[type=submit]:hover {
   /* text-align: center; */  
   background: rgba(34, 33, 33, 0.685);
   position: absolute;
-  bottom: 0;
-  left: 0;
+  /* bottom: 0; */
+  /* left: 0; */
+  top: 100px;
   color: #f9f9f9;
-  transform: translateY(100%);
+  transform: translateX(-100%);
   transition: all 200ms ease;
 }
 
@@ -372,13 +374,13 @@ input[type=submit]:hover {
 .inputs__button {
   position: absolute;
   top: 0;
-  left: 1em;
-  transform: translateY(-100%);  
+  right: 0;
+  transform: translateX(100%);  
   font-size: 1.2rem;
 }
 
 .inputs--show {
-  transform: translateY(0);
+  transform: translateX(0);
 }
 
 .inputs label {
