@@ -146,6 +146,19 @@ def removeTodo(todo_id):
     flash('Todo not found!')
     return redirect('/settings')
 
+@app.route('/settings/embed/<embed_code>', methods=['GET', 'POST'])
+@login_required
+def removeEmbed(embed_code):
+    userEmbeds = current_user.embeds.all()
+    for embed in userEmbeds:
+        if embed.embed == embed_code:
+            db.session.delete(embed)
+            db.session.commit()
+            flash('Removed embed!')
+            return redirect('/settings')
+    flash('Embed not found!')
+    return redirect('/settings')
+    
 
 @app.route('/about')
 def about():

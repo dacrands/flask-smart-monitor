@@ -41,7 +41,9 @@
     <ul>
       {% for embed in embeds %}
       <li>
-        {{embed}}
+        <h3>{{embed[-1]}}</h3>        
+        <a href="/settings/embed/{{embed[0]}}">Remove embed</a>
+
       </li>
       {% endfor %}
     </ul>
