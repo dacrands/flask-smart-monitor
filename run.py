@@ -3,4 +3,4 @@ from app.models import User, Stock, Todo, Embed
 
 @app.shell_context_processor
 def make_shell_context():
-  return {'db': db, 'User': User, 'Stock': Stock, 'Todo':Todo}
+  return {'db': db, 'User': User, 'Stock': Stock, 'Todo':Todo, 'Embed':Embed}

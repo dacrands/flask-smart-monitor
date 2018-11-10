@@ -4,9 +4,13 @@ from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
 
 from app import app, db
-from app.forms import TodoForm, StockForm, LoginForm, RegistrationForm, \
-                      LocationForm, ResetPasswordForm, NewPasswordForm
-from app.models import User, Stock, Todo
+from app.forms import TodoForm, StockForm, LoginForm, EmbedForm,\
+                      RegistrationForm, LocationForm,\
+                      ResetPasswordForm, NewPasswordForm
+
+
+
+from app.models import User, Stock, Todo, Embed
 from app.email import auth_email, reset_email
 
 WEATHER_URL = "https://api.darksky.net/forecast/{0}/{1},{2}".format(
@@ -19,8 +23,12 @@ WEATHER_URL = "https://api.darksky.net/forecast/{0}/{1},{2}".format(
 def index():
     todoForm = TodoForm()
     todos = current_user.todos.all()
+
     userStocks = current_user.stocks.all()
     stockList = [stock.symbol for stock in userStocks]
+
+    userEmbeds = current_user.embeds.all()
+    embedList = [(embed.embed, embed.name) for embed in userEmbeds]
 
     stockStr = ','.join(stockList).rstrip(',')
 
@@ -41,10 +49,11 @@ def index():
         stocksJson = []
     else:
         stocksJson = stocksRes.json()
-
+    print(embedList)
     return render_template('index.html', 
-                            todos = todos,
-                            todoForm = todoForm,
+                            todos=todos,
+                            embeds=embedList,
+                            todoForm=todoForm,                            
                             weatherData=weatherJson, 
                             stocksData=stocksJson, 
                             YTembed=app.config['YT_EMBED'])
@@ -60,6 +69,9 @@ def settings():
 
     userTodos = current_user.todos.all()
     todoList = [(todo.id, todo.todo) for todo in userTodos]
+
+    userEmbeds = current_user.embeds.all()
+    embedList = [(embed.embed, embed.name) for embed in userEmbeds]
     
 
     locationForm = LocationForm()
@@ -83,13 +95,26 @@ def settings():
         db.session.add(todo)
         db.session.commit()
         flash('Added todo!')
+
+        return redirect('/settings')
+    embedForm = EmbedForm()
+    if embedForm.submitEmbed.data and embedForm.validate_on_submit():
+        embed = Embed(embed=embedForm.embed.data, 
+                      name=embedForm.name.data,
+                      author=current_user)
+        db.session.add(embed)
+        db.session.commit()
+        flash('Added embed!')
         return redirect('/settings')
 
+    
     return render_template('settings.html', 
                             stocks=stockList, 
                             stockForm=stockForm,
-                            todoForm=todoForm, 
+                            todoForm=todoForm,                             
                             todos=todoList,
+                            embedForm=embedForm,
+                            embeds=embedList, 
                             locationForm=locationForm, 
                             lat=lat, 
                             lon=lon)

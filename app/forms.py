@@ -41,6 +41,11 @@ class StockForm(FlaskForm):
     symbol = StringField('Enter ticker symbol: ', validators=[DataRequired()])
     submitStock = SubmitField('Add stock \u203A')
 
+class EmbedForm(FlaskForm):
+    embed = StringField('Enter embed: ', validators=[DataRequired()])
+    name = StringField('Give it a name: ', validators=[DataRequired()])
+    submitEmbed = SubmitField('Add embed \u203A')
+
 class TodoForm(FlaskForm):
     todo = StringField('Enter todo: ', validators=[DataRequired(), Length(
                                                         min=1, 

@@ -35,6 +35,36 @@
     </form>
   </div>
 
+  <div class="settings">
+    <h1 class="primary">Embeds</h1>
+    <!-- <h2 class="font-light">Your stocks: </h2> -->
+    <ul>
+      {% for embed in embeds %}
+      <li>
+        {{embed}}
+      </li>
+      {% endfor %}
+    </ul>
+    <form action="" method="post">
+      <!-- <h3 class="font-light">Add a stock: </h3> -->
+      {{ embedForm.hidden_tag() }}
+      <p>
+        {{ embedForm.embed.label }}
+        {{embedForm.embed(size=16) }}
+        {% for err in embedForm.embed.errors %}
+        <span class="error">Embed: {{ err }}</span>
+        {% endfor %}
+      </p>
+      <p>
+        {{ embedForm.name.label }}
+        {{ embedForm.name(size=24) }}
+        {% for err in embedForm.name.errors %}
+        <span class="error">Embed name: {{ err }}</span>
+        {% endfor %}
+      </p>
+      <p class=>{{ embedForm.submitEmbed() }}</p>
+    </form>
+  </div>
 
   <div class="settings">
     <form action="" method="post">
