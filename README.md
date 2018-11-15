@@ -1,6 +1,14 @@
 # Flask Smart Frame
 
-Set a custom background video, view the weather and stock prices.
+Flask Smart Frame is a productivity application and a piece of art.
+
+## Features
+
+- **To Do List:** Easily add/remove "to dos"
+- **Stock Ticker:** Easily add/remove stocks to appear in the scrolling ticker
+- **Weather:** Set your location and receive real-time weather information
+- **YouTube Background Video:** Save your favorite YouTube videos to appear as full-screen, dynamic backgrounds. 
+
 
 ![flask frame](https://i.imgur.com/mXVg5NMl.jpg)
 

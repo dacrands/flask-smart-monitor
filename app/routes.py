@@ -39,6 +39,7 @@ def index():
         app.config['WEATHER_API_KEY'], current_user.latitude, current_user.longitude)
     
     weatherRes = requests.get(WEATHER_URL)
+    print(app.config['WEATHER_API_KEY'])
     if weatherRes.status_code != 200:
         weatherJson = False
     else:
