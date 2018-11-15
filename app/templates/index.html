@@ -4,12 +4,12 @@
 
 <main class="main">        
   <div class="dash">         
-    {% include "_weather.html" %}                         
-    {% include "_stocks.html" %}                                 
+    {% include "containers/_weather.html" %}                         
+    {% include "containers/_stocks.html" %}                                 
   </div>  
-  {% include "_todos.html" %}  
+  {% include "containers/_todos.html" %}  
   <div id="player"></div>
-  {% include "_inputs.html" %}                             
+  {% include "containers/_inputs.html" %}                             
 </main>
 <script>
   document.body.style.overflow = 'hidden';
@@ -20,6 +20,6 @@
 <div class="hide" style="display:none;">{{YTembed}}</div>
 
 <!-- Youtube script -->
-{% include "_youtube.html" %}
+{% include "containers/_youtube.html" %}
       
 {% endblock %}
