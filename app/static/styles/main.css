@@ -68,8 +68,10 @@ code {
   color: rgb(22, 155, 152);
 }
 
-.back {
-  margin-bottom: 2rem;
+.back,
+.delete {
+  margin: 1rem 2rem;
+  display: block;
 }
 
 .error {
@@ -80,6 +82,8 @@ code {
   margin: 1rem 0;
   border-radius: 3px;
 }
+
+
 
 
 /* ===============
@@ -239,6 +243,19 @@ input[type=submit]:hover {
   background: rgb(39, 119, 194);
   color: #ffff;
 }
+
+.danger input[type=submit] {
+  /* border: 1px solid red !Important; */
+  border: 1px solid rgb(226, 51, 51);
+  color: rgb(226, 51, 51);
+}
+
+.danger input[type=submit]:hover {
+  color: white;
+  background: rgb(226, 51, 51);
+}
+
+
 
 
 

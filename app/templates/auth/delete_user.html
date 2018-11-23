@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<a class="back" href="{{url_for('settings')}}"> &larr; Back</a>
+
+<div class="form__container">
+  <h2>Delete account</h2>
+  <form class="form" action="" method="post">
+    {{ form.hidden_tag() }}
+    <p>
+      Not to scare you, but this action can't be undone.
+    </p>
+    <p>
+      Please verify your password to say goodbye forever.
+    </p>
+    <p>
+      {{ form.password.label }}<br>
+      {{ form.password(size=32) }}
+    </p>
+    <p class="danger">{{ form.submit() }}</p>
+    <p>
+      Forgot your password?
+      <a href="{{url_for('reset_password')}}">Password Reset</a>
+    </p>
+    
+  </form>
+  
+ 
+
+</div>
+
+
+
+{% endblock %}

@@ -6,7 +6,7 @@ from werkzeug.urls import url_parse
 from app import app, db
 from app.forms import TodoForm, StockForm, LoginForm, EmbedForm,\
                       RegistrationForm, LocationForm,\
-                      ResetPasswordForm, NewPasswordForm
+                      ResetPasswordForm, NewPasswordForm, DeleteUserForm
 
 
 
@@ -16,7 +16,11 @@ from app.email import auth_email, reset_email
 WEATHER_URL = "https://api.darksky.net/forecast/{0}/{1},{2}".format(
     app.config['WEATHER_API_KEY'], app.config['LATITUDE'], app.config['LONGITUDE'])
 
-
+"""
+=========
+INDEX
+=========
+"""
 @app.route('/')
 @app.route('/index')
 @login_required
@@ -39,7 +43,7 @@ def index():
         app.config['WEATHER_API_KEY'], current_user.latitude, current_user.longitude)
     
     weatherRes = requests.get(WEATHER_URL)
-    print(app.config['WEATHER_API_KEY'])
+
     if weatherRes.status_code != 200:
         weatherJson = False
     else:
@@ -59,7 +63,11 @@ def index():
                             stocksData=stocksJson, 
                             YTembed=app.config['YT_EMBED'])
 
-
+"""
+=========
+SETTINGS
+=========
+"""
 @app.route('/settings', methods=['GET', 'POST'])
 @login_required
 def settings():
@@ -120,7 +128,12 @@ def settings():
                             lat=lat, 
                             lon=lon)
 
-
+"""
+=========
+SETTINGS 
+- edit
+=========
+"""
 @app.route('/settings/<stock>', methods=['GET', 'POST'])
 @login_required
 def removeStock(stock):
@@ -160,12 +173,44 @@ def removeEmbed(embed_code):
     flash('Embed not found!')
     return redirect('/settings')
     
-
+"""
+=========
+ABOUT
+=========
+"""
 @app.route('/about')
 def about():
     return render_template('about.html')
 
+"""
+=========
+REGISTER
+=========
+"""
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(username=form.username.data, email=form.email.data)
+        user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        token = user.get_email_token()
+        auth_email('welcome@crandall.com',
+                   'Email confirmation!',
+                   user.email,
+                   render_template('email/reg_email.html', token=token))
+        flash('Thanks! We just sent an email confirmation.')
+        return redirect(url_for('login'))
+    return render_template('auth/register.html', form=form)
 
+"""
+=========
+LOGIN
+=========
+"""
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -199,12 +244,39 @@ def login():
         return redirect(next_page)
     return render_template('auth/login.html', form=form)
 
-
+"""
+=========
+LOGOUT
+=========
+"""
 @app.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('index'))
 
+@app.route('/delete', methods=['GET', 'POST'])
+@login_required
+def delete_user():
+    form = DeleteUserForm()
+    if form.validate_on_submit():
+        if current_user.check_password(form.password.data):
+            user = User.query.filter_by(id=current_user.id).first()
+            db.session.delete(user)
+            db.session.commit()
+            flash('Account deleted.')
+            return(redirect('/login'))
+        flash('That password does not seem to match')
+        return render_template('auth/delete_user.html', form=form)        
+    return render_template('auth/delete_user.html', form=form)
+
+
+
+"""
+=========
+PASSWORD
+NEW
+=========
+"""
 
 @app.route('/new_password/<token>', methods=['GET', 'POST'])
 def new_password(token):
@@ -222,11 +294,15 @@ def new_password(token):
         return redirect(url_for('login'))
     return render_template('auth/new_password.html', form=form)
 
+"""
+=========
+PASSWORD
+RESET
+=========
+"""
 
 @app.route('/reset_password', methods=['GET', 'POST'])
 def reset_password():
-    if current_user.is_authenticated:
-        return redirect(url_for('/'))
     form = ResetPasswordForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
@@ -243,21 +319,3 @@ def reset_password():
     return render_template('auth/reset_password.html', form=form)
 
 
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    if current_user.is_authenticated:
-        return redirect(url_for('index'))
-    form = RegistrationForm()
-    if form.validate_on_submit():
-        user = User(username=form.username.data, email=form.email.data)
-        user.set_password(form.password.data)
-        db.session.add(user)
-        db.session.commit()
-        token = user.get_email_token()
-        auth_email('welcome@crandall.com',
-                   'Email confirmation!',
-                   user.email,
-                   render_template('email/reg_email.html', token=token))
-        flash('Thanks! We just sent an email confirmation.')
-        return redirect(url_for('login'))
-    return render_template('auth/register.html', form=form)
