@@ -10,6 +10,6 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY') or 'whoops'
     WEATHER_API_KEY = os.environ.get('WEATHER_API_KEY') or 'nice-try'
-    LONGITUDE = os.environ.get('LONGITUDE') or -73.9976
-    LATITUDE = os.environ.get('LATITUDE') or 40.9622
+    LONGITUDE = os.environ.get('LONGITUDE') or 1
+    LATITUDE = os.environ.get('LATITUDE') or 1
     YT_EMBED = os.environ.get('YT_EMBED') or 'XEfDYMngJeE'

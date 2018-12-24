@@ -77,13 +77,13 @@
         {{ locationForm.lat.label }}
         {{ locationForm.lat(size=4) }}
         {% for err in locationForm.lat.errors %}
-        <span class="error">Stock: {{ err }}</span>
+        <span class="error">Location: {{ err }}</span>
         {% endfor %}
         <br>
         {{ locationForm.lon.label }}
         {{ locationForm.lon(size=4) }}        
         {% for err in locationForm.lon.errors %}
-        <span class="error">Stock: {{ err }}</span>
+        <span class="error">Location: {{ err }}</span>
         {% endfor %}
       </p>
       <p class=>{{ locationForm.submitLoc() }}</p>
