@@ -54,7 +54,7 @@ def index():
         stocksJson = []
     else:
         stocksJson = stocksRes.json()
-    print(embedList)
+                    
     return render_template('index.html', 
                             todos=todos,
                             embeds=embedList,
