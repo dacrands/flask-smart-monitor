@@ -1,7 +1,5 @@
 <div class="ticker">
-
-  <section class="stocks">  
-      
+  <section class="stocks">                   
     {% for stock in stocksData %}
       <div class="stocks__quote">
         <strong>
@@ -9,7 +7,6 @@
         </strong>                    
         <p>{{ stocksData[stock]['quote']['latestPrice'] }}</p>
       </div>  
-    {% endfor %}
-    
-  </section>
+    {% endfor %}    
+  </section>  
 </div>  
