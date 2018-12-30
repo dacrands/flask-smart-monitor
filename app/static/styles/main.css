@@ -297,18 +297,19 @@ input[type=submit]:hover {
 
 .todo__item {
   padding: .5rem;
-  background: rgb(22, 155, 152);
+  color: rgb(34, 33, 33);
+  /* background: rgb(22, 155, 152); */
+  background: #dadada;
+  background: rgb(39, 119, 194);
+  color: #dadada;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
 }
 
 .todo ul {
   list-style: decimal;
-  /* padding: 0; */
-  /* list-style: none; */
 }
-
 
 .todo li {
   color: #e1e8ee;  
@@ -316,7 +317,6 @@ input[type=submit]:hover {
   margin-bottom: .5rem;
   /* border-top: 1px solid rgb(22, 155, 152); */
 }
-
 
 .todo a {
   color: red;
@@ -334,10 +334,6 @@ input[type=submit]:hover {
   display: flex;
   align-items: center;
   min-width: fit-content;
-  /* grid-area: 1; */
-  /* background: #00d2ff;  
-  background: -webkit-linear-gradient(to right, #3a7bd5, #00d2ff);
-  background: linear-gradient(to right, #3a7bd5, #00d2ff);  */
 }
 
 .weather h1,

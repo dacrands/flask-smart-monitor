@@ -198,8 +198,8 @@ def register():
         db.session.add(user)
         db.session.commit()
         token = user.get_email_token()
-        auth_email('welcome@crandall.com',
-                   'Email confirmation!',
+        auth_email('welcome@flaskframe.com',
+                   'Verify Your Account!',
                    user.email,
                    render_template('email/reg_email.html', token=token))
         flash('Thanks! We just sent an email confirmation.')
@@ -220,7 +220,7 @@ def login():
     if token:
         user_id = User.verify_email_token(token)
         if type(user_id) == None:
-            flash('You stink!')
+            flash('Something went wrong! Please try logging in.')
             return redirect(url_for('index'))
         user = User.query.get(user_id)
         user.set_verify(True)
@@ -277,12 +277,11 @@ PASSWORD
 NEW
 =========
 """
-
 @app.route('/new_password/<token>', methods=['GET', 'POST'])
 def new_password(token):
     user_id = User.verify_email_token(token)
     if type(user_id) == None:
-        flash('You stink!')
+        flash('Something went wrong! Please submit another password reset request.')
         return redirect(url_for('index'))
     user = User.query.get(user_id)
     if not user:
@@ -300,7 +299,6 @@ PASSWORD
 RESET
 =========
 """
-
 @app.route('/reset_password', methods=['GET', 'POST'])
 def reset_password():
     form = ResetPasswordForm()
@@ -308,7 +306,7 @@ def reset_password():
         user = User.query.filter_by(email=form.email.data).first()
         if user:
             token = user.get_email_token()
-            reset_email('reset@crandall.com',
+            reset_email('reset@flaskframe.com',
                         'Reset Password',
                         user.email,
                         render_template('email/reset_email.html', token=token))
