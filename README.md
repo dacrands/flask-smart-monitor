@@ -25,7 +25,7 @@ Flask Smart Frame is a productivity application and a piece of art. More specifi
 
 
 ## Table of Contents
-- [Description](#desciption)
+- [Description](#description)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Configuration](#configuration)
@@ -80,10 +80,10 @@ Last, initialize your database.
 ```
 
 ## Hosting
----
+
 The following instructions will get the application running on Heroku. 
 
-If you didn't know what the `Procfile` does, it's instruction for Heroku on how to run our 
+If you didn't know what the `Procfile` does, it's instructions for Heroku on how to run an 
 application. 
 
 ```
@@ -91,9 +91,9 @@ web: flask db upgrade; gunicorn run:app
 ```
 
 I won't delve into the specifics, but generally:
--  `web` tells Heroku we are hosting a web applications
+-  `web` tells Heroku we are hosting a web application
 - `flask db upgrade` upgrades our db
-- `gunicorn run:app` starts our [gunicorn](https://gunicorn.org/) server and launches the app
+- `gunicorn run:app` starts our [gunicorn](https://gunicorn.org/) server and starts the app
 
 
 ### Download Heroku and deploy your first application
@@ -101,13 +101,13 @@ I won't delve into the specifics, but generally:
 Heroku is free and easy to use. Here is the ["Getting Started on Heroku with Python" tutorial](https://devcenter.heroku.com/articles/getting-started-with-python). Heroku has excellent documentation, so please be sure to finish their tutorial before proceeding.
 
 ### Create a New App
-So you should know how to do this, but just as a refresher.
+You should know how to do this, but just as a refresher:
 
 ```
 heroku create
 ```
 
-Then push the repo.
+Then push the repo...
 ```
 git push heroku master
 ```
@@ -121,6 +121,7 @@ Set the following `config vars`:
 - WEATHER_API_KEY=<YOUR_DARKSKY_KEY>
 
 ### Configure Postgresql
+Last, configure your database.
 
 ```
  heroku addons:add heroku-postgresql:hobby-dev
@@ -133,5 +134,5 @@ heroku run flask shell
 ```
 
 ## Author
----
+
 David Crandall
