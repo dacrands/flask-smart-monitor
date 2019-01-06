@@ -81,4 +81,57 @@ Last, initialize your database.
 
 ## Hosting
 ---
-The following instructions will get the application running on Heroku.
+The following instructions will get the application running on Heroku. 
+
+If you didn't know what the `Procfile` does, it's instruction for Heroku on how to run our 
+application. 
+
+```
+web: flask db upgrade; gunicorn run:app
+```
+
+I won't delve into the specifics, but generally:
+-  `web` tells Heroku we are hosting a web applications
+- `flask db upgrade` upgrades our db
+- `gunicorn run:app` starts our [gunicorn](https://gunicorn.org/) server and launches the app
+
+
+### Download Heroku and deploy your first application
+
+Heroku is free and easy to use. Here is the ["Getting Started on Heroku with Python" tutorial](https://devcenter.heroku.com/articles/getting-started-with-python). Heroku has excellent documentation, so please be sure to finish their tutorial before proceeding.
+
+### Create a New App
+So you should know how to do this, but just as a refresher.
+
+```
+heroku create
+```
+
+Then push the repo.
+```
+git push heroku master
+```
+
+### Config Vars
+Given that you finished the tutorial linked above, you learned about [config vars](https://devcenter.heroku.com/articles/getting-started-with-python#define-config-vars) and how to configure them. 
+
+Set the following `config vars`:
+- FLASK_APP=run.py
+- SENDGRID_API_KEY=<YOUR_SENGRID_KEY>
+- WEATHER_API_KEY=<YOUR_DARKSKY_KEY>
+
+### Configure Postgresql
+
+```
+ heroku addons:add heroku-postgresql:hobby-dev
+```
+
+And that should do it. If you run into any issues, such as with db migrations, you can always [start up a heroku console](https://devcenter.heroku.com/articles/getting-started-with-python#start-a-console) and run the flask shell.
+
+```
+heroku run flask shell
+```
+
+## Author
+---
+David Crandall
