@@ -26,7 +26,6 @@ Flask Smart Frame is a productivity application and a piece of art. More specifi
 
 ## Table of Contents
 - [Description](#description)
-- [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Configuration](#configuration)
 - [How it works](#how)
