@@ -3,8 +3,6 @@ body {
   margin: 0 !important;
   padding: 0;
   min-height: 100%;
-  /* overflow: hidden; */
-  /* font-family: 'Quicksand', sans-serif; */
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   color: rgb(53, 56, 56);
 }
@@ -20,46 +18,9 @@ code {
   border-radius: 3px;
 }
 
-/* ===============
-    SETTINGS
-================*/
-.settings {
-  margin-bottom: 3rem;
-}
-
-.settings ul {
-  /* outline: 4px solid red; */
-  
-  /* border: 1px solid rgb(22, 155, 152); */
-  list-style: none;
-  padding: 0;
-}
-
-.settings ul h3 {
-  margin: .5rem;
-}
-
-.settings a {
-  font-size: .7rem;
-  color: rgb(22, 155, 152);
-}
-
-.settings a:hover {
-  color: rgb(211, 40, 54);
-}
-
-.settings li {
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  margin: 0.5rem;
-  box-shadow: 0 0 3px rgba(0,0,0,0.3);
-  border-radius: 2px;
-  text-align: center;
-}
-
-/* ===============
+/* **************
     HELPER
-================*/
+****************** */
 .font-light{
   font-weight: 100;
 }
@@ -83,8 +44,19 @@ code {
   border-radius: 3px;
 }
 
+/* **************
+      FLASH
+*************** */
+.flash {
+  background: rgb(22, 155, 152);
+  list-style: none;
+  margin: 0;  
+}
 
-
+.flash li {
+  padding: 1em;
+  color: #f9f9f9;
+}
 
 /* ===============
     CONTAINER
@@ -95,6 +67,11 @@ code {
   padding: 0 1em;
 }
 
+.container__item {
+  margin-bottom: 4rem;
+  text-align: center;
+}
+
 .container__item h1 {  
   color: rgb(22, 155, 152);
 }
@@ -102,7 +79,6 @@ code {
 .container__item h1 span {
   color: rgb(53, 56, 56);
 }
-
 
 .container__item h2 {
   font-weight: 100;
@@ -113,16 +89,8 @@ code {
   margin: 0 auto;
 }
 
-.container__item {
-  margin-bottom: 4rem;
-  text-align: center;
-}
-
-
 .container__img {
   margin: 4rem;
-  /* display: flex;
-  justify-content: center; */
 }
 
 .container__img img {
@@ -130,8 +98,6 @@ code {
   max-width: 100%;
   height: auto;
 }
-
-
 
 
 /* ===============
@@ -145,6 +111,7 @@ code {
   padding: 1em;
   text-decoration: none;
 }
+
 
 /* ===============
       HEADER
@@ -176,13 +143,12 @@ code {
   color: rgb(22, 155, 152);
 }
 
+
 /* ===============
       MAIN
 ================*/
 .main {
   display: grid;
-  /* grid-template-columns: 1fr; */
-  /* grid-auto-rows: 8em 1fr; */
   height: 100%;
 }
 
@@ -191,22 +157,6 @@ code {
 .main h3,
 .main p {
   margin: 0;
-}
-
-
-
-/* ===============
-      FLASH
-================*/
-.flash {
-  background: rgb(22, 155, 152);
-  list-style: none;
-  margin: 0;  
-}
-
-.flash li {
-  padding: 1em;
-  color: #f9f9f9;
 }
 
 
@@ -256,6 +206,39 @@ input[type=submit]:hover {
 }
 
 
+/* ===============
+    SETTINGS
+================*/
+.settings {
+  margin-bottom: 3rem;
+}
+
+.settings ul {
+  list-style: none;
+  padding: 0;
+}
+
+.settings ul h3 {
+  margin: .5rem;
+}
+
+.settings a {
+  font-size: .7rem;
+  color: rgb(22, 155, 152);
+}
+
+.settings a:hover {
+  color: rgb(211, 40, 54);
+}
+
+.settings li {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
+  box-shadow: 0 0 3px rgba(0,0,0,0.3);
+  border-radius: 2px;
+  text-align: center;
+}
 
 
 
@@ -283,11 +266,8 @@ input[type=submit]:hover {
 .todo {
   background: rgba(34, 33, 33, 0.785);
   color: #e1e8ee;  
-  position: absolute;
-  /* padding: .5rem; */
+  position: absolute;  
   border-radius: 5px;
-  /* background: white; */
-  /* display: flex; */
   cursor: move;
   width: 300px;  
   z-index: 9;
@@ -297,14 +277,11 @@ input[type=submit]:hover {
 
 .todo__item {
   padding: .5rem;
-  color: rgb(34, 33, 33);
-  /* background: rgb(22, 155, 152); */
-  background: #dadada;
+  color: rgb(34, 33, 33);    
   background: rgb(39, 119, 194);
   color: #dadada;
   border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  /* text-transform: uppercase; */
+  border-top-right-radius: 5px;  
 }
 
 .todo ul {
@@ -312,10 +289,8 @@ input[type=submit]:hover {
 }
 
 .todo li {
-  color: #e1e8ee;  
-  /* padding: .35rem .5rem; */
-  margin-bottom: .5rem;
-  /* border-top: 1px solid rgb(22, 155, 152); */
+  color: #e1e8ee;    
+  margin-bottom: .5rem;  
 }
 
 .todo a {
@@ -342,8 +317,7 @@ input[type=submit]:hover {
   font-weight: 100;
 }
 
-.weather div {
-  /* float: left; */  
+.weather div {  
   margin-right: 1rem;
   padding: .4rem;
 }
@@ -355,12 +329,9 @@ input[type=submit]:hover {
 /* ===============
     INPUTS
 ================*/
-.inputs {
-  /* text-align: center; */  
+.inputs {  
   background: rgba(34, 33, 33, 0.685);
   position: absolute;
-  /* bottom: 0; */
-  /* left: 0; */
   top: 100px;
   color: #f9f9f9;
   transform: translateX(-100%);
@@ -428,8 +399,7 @@ input[type=submit]:hover {
 /* ===============
     STOCKS
 ================*/
-.stocks {
-  /* outline: 2px solid salmon; */
+.stocks {  
   padding: 0;
   display: flex;
   animation: slider 45s linear infinite;
@@ -458,8 +428,10 @@ input[type=submit]:hover {
   padding: 1em .5em;
   margin-right: 5rem;
   min-width: 300px;
-  /* border-bottom: 2px solid #bbc0c4; */
-  /* margin: 1rem 0; */
+}
+
+.stocks__quote p {
+  margin-bottom: 0.25rem;
 }
 
 @keyframes slider {
@@ -470,8 +442,4 @@ input[type=submit]:hover {
   100% {
     transform: translateX(100%);
   }
-}
-
-.stocks__quote p {
-  margin-bottom: 0.25rem;
 }
