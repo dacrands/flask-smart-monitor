@@ -272,10 +272,14 @@ def logout():
 def delete_user():
     form = DeleteUserForm()
     if form.validate_on_submit():
-        if current_user.check_password(form.password.data):
+        if current_user.check_password(form.password.data):            
             user = User.query.filter_by(id=current_user.id).first()
             db.session.delete(user)
             db.session.commit()
+
+            # You need to log out the user to remove the cookie,
+            # This caused me a headache, not literally, but you understand.
+            logout_user()
             flash('Account deleted.')
             return(redirect('/login'))
         flash('That password does not seem to match')
@@ -328,5 +332,3 @@ def reset_password():
         flash('Thanks! We just sent a reset link.')
         return redirect(url_for('login'))
     return render_template('auth/reset_password.html', form=form)
-
-
