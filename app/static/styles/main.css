@@ -75,6 +75,7 @@ code strong {
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
   display: none;
   border-radius: 3px;
+  line-height: 150%;
 }
 
 .tooltip--show {
