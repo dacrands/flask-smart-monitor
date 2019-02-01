@@ -12,8 +12,8 @@ def auth_email(from_email, subject, to_email, content):
     mail = Mail(from_email, subject, to_email, content)
     response = sg.client.mail.send.post(request_body=mail.get())
     if response.status_code != 202:
-        return 'there was an error'
-    return 'Sent'
+        return response.status_code
+    return 202
 
 def reset_email(from_email, subject, to_email, content):
     sg = sendgrid.SendGridAPIClient(apikey=app.config['SENDGRID_API_KEY'])

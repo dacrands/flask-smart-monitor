@@ -104,8 +104,8 @@ def settings():
         db.session.add(todo)
         db.session.commit()
         flash('Added todo!')
-
         return redirect('/settings')
+
     embedForm = EmbedForm()
     if embedForm.submitEmbed.data and embedForm.validate_on_submit():
         embed = Embed(embed=embedForm.embed.data, 
@@ -115,7 +115,6 @@ def settings():
         db.session.commit()
         flash('Added embed!')
         return redirect('/settings')
-
     
     return render_template('settings.html', 
                             stocks=stockList, 
@@ -196,13 +195,27 @@ def register():
         user = User(username=form.username.data, email=form.email.data)
         user.set_password(form.password.data)
         db.session.add(user)
+        
+
+        # Initiliaze some cools videos!
+        embed1 = Embed(embed='mFlrc16xjik', 
+                      name='Ocean stuff, whales, etc.',
+                      author=user)
+        db.session.add(embed1)
+        
+
+        embed2 = Embed(embed='Zk0W2UvyINM', 
+                      name='Relaxing nature',
+                      author=user)
+        db.session.add(embed2)
         db.session.commit()
+        
         token = user.get_email_token()
         auth_email('welcome@flaskframe.com',
                    'Verify Your Account!',
                    user.email,
                    render_template('email/reg_email.html', token=token))
-        flash('Thanks! We just sent an email confirmation.')
+        flash('Thanks! We just sent an email confirmation. ')
         return redirect(url_for('login'))
     return render_template('auth/register.html', form=form)
 

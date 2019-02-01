@@ -170,6 +170,10 @@ code {
   flex-direction: column;
 }
 
+.form__container p {
+  line-height: 150%;
+}
+
 .form__container form {
   max-width: 500px;
 }

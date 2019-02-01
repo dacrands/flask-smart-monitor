@@ -6,7 +6,7 @@
     <label>Select a video
       <select name="embed-codes" id="embedCodes">
         {% for embed in embeds %}
-          <option value="{{embed[0]}}">{{embed[-1]}}</option>
+          <option className="select__option" value="{{embed[0]}}">{{embed[-1]}}</option>
         {% endfor %}
       </select>
     </label>
