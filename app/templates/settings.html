@@ -35,10 +35,10 @@
     </form>
   </div>
 
-  <div class="settings">
+  <div class="settings">  
     <h1 class="primary">Embeds
         <button class="tooltip__btn">          
-          &#128712;         
+            <img src="{{ url_for('static', filename='images/info.svg') }}" alt="">    
         </button>
     </h1> 
     
@@ -129,8 +129,8 @@
     </form>
   </div>
 
-  <div class="delete">
-    <a href="{{url_for('delete_user')}}">
+  <div class="danger">
+    <a class="danger" href="{{url_for('delete_user')}}">
       Delete Account
     </a>
   </div>
