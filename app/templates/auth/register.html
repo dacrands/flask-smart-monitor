@@ -10,6 +10,7 @@
     <p>
       {{ form.username.label }} <br>
       {{ form.username(size=32) }} <br>
+      <small>Must be between 6 and 16 characters.</small> <br>
       {% for err in form.username.errors %}
       <span class="error">{{ err }}</span>
       {% endfor %}
@@ -26,6 +27,7 @@
     <p>
       {{ form.password.label }} <br>
       {{ form.password(size=32) }} <br>
+      <small>Must be between 8 and 16 characters.</small> <br>
       {% for err in form.password.errors %}
       <span class="error">{{ err }}</span>
       {% endfor %}

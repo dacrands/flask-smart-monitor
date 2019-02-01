@@ -1,15 +1,5 @@
 <div class="todo">
-    <!-- <form action="" method="post">      
-      {{ todoForm.hidden_tag() }}
-      <p>
-        {{ todoForm.todo.label }}
-        {{ todoForm.todo(size=32) }}
-        {% for err in todoForm.todo.errors %}
-        <span class="error">Todo: {{ err }}</span>
-        {% endfor %}
-      </p>
-      <p class=>{{ todoForm.submitTodo() }}</p>
-    </form> -->
+  {% if todos|length > 0 %}
   <div class="todo__item">
     <h3><span>&#10495;</span> To Do List </h3>   
   </div>
@@ -18,11 +8,12 @@
       <li>{{todo.todo}}<a href="/settings/todo/{{todo.id}}"><span>&#x2715;</span></a></li>        
     {% endfor %}
   </ul>   
+  {% endif %}
 </div>
 
 <script>  
 // ===================
-// I didn't write this logic
+// I didn't write this logic, w3schools
 // ===================
 dragElement(document.querySelector(".todo"));
 var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;

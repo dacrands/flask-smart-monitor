@@ -267,6 +267,12 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
+
+"""
+=========
+DELETE USER
+=========
+"""
 @app.route('/delete', methods=['GET', 'POST'])
 @login_required
 def delete_user():

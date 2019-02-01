@@ -36,7 +36,21 @@
   </div>
 
   <div class="settings">
-    <h1 class="primary">Embeds</h1>
+    <h1 class="primary">Embeds
+        <button class="tooltip__btn">          
+          &#x1f6c8;          
+        </button>
+    </h1> 
+    
+    <span class="tooltip">Here is a link to a Youtube video: 
+      <code>
+        https://www.youtube.com/watch?v=<strong>FGBhQbmPwH8</strong>
+      </code>
+      <br> That yellow sequence of characters
+      at the end is an <strong>embed code.</strong>
+      Copy paste that code into the box below, add a title,
+      and enjoy!
+    </span>
     <!-- <h2 class="font-light">Your stocks: </h2> -->
     <ul>
       {% for embed in embeds %}
@@ -127,5 +141,12 @@
   
 </main>
 
+<script>
+    const tooltip = document.querySelector('.tooltip');
+    const tooltipBtn = document.querySelector('.tooltip__btn');
+    tooltipBtn.addEventListener('click', e => {
+      tooltip.classList.toggle('tooltip--show')
+    })
+</script>
 
 {% endblock %}
