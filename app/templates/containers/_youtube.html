@@ -7,7 +7,7 @@
   firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
   if(!window.localStorage.embed) {
-    window.localStorage.embed = document.querySelector('.select__option')[0].value;
+    window.localStorage.embed = document.querySelector('.hide').innerText;
   }
   
   // 3. This function creates an <iframe> (and YouTube player)
