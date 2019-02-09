@@ -5,9 +5,8 @@ from werkzeug.urls import url_parse
 
 from app import app, db
 from app.forms import TodoForm, StockForm, LoginForm, EmbedForm,\
-                      RegistrationForm, LocationForm,\
-                      ResetPasswordForm, NewPasswordForm, DeleteUserForm
-
+    RegistrationForm, LocationForm,\
+    ResetPasswordForm, NewPasswordForm, DeleteUserForm
 
 
 from app.models import User, Stock, Todo, Embed
@@ -41,7 +40,7 @@ def index():
 
     WEATHER_URL = "https://api.darksky.net/forecast/{0}/{1},{2}".format(
         app.config['WEATHER_API_KEY'], current_user.latitude, current_user.longitude)
-    
+
     weatherRes = requests.get(WEATHER_URL)
 
     if weatherRes.status_code != 200:
@@ -54,14 +53,15 @@ def index():
         stocksJson = []
     else:
         stocksJson = stocksRes.json()
-                    
-    return render_template('index.html', 
-                            todos=todos,
-                            embeds=embedList,
-                            todoForm=todoForm,                            
-                            weatherData=weatherJson, 
-                            stocksData=stocksJson, 
-                            YTembed=app.config['YT_EMBED'])
+
+    return render_template('index.html',
+                           todos=todos,
+                           embeds=embedList,
+                           todoForm=todoForm,
+                           weatherData=weatherJson,
+                           stocksData=stocksJson,
+                           YTembed=app.config['YT_EMBED'])
+
 
 """
 =========
@@ -72,7 +72,7 @@ SETTINGS
 @login_required
 def settings():
     (lat, lon) = (current_user.latitude, current_user.longitude)
-    
+
     userStocks = current_user.stocks.all()
     stockList = [stock.symbol for stock in userStocks]
 
@@ -81,7 +81,6 @@ def settings():
 
     userEmbeds = current_user.embeds.all()
     embedList = [(embed.embed, embed.name) for embed in userEmbeds]
-    
 
     locationForm = LocationForm()
     if locationForm.submitLoc.data and locationForm.validate_on_submit():
@@ -108,24 +107,25 @@ def settings():
 
     embedForm = EmbedForm()
     if embedForm.submitEmbed.data and embedForm.validate_on_submit():
-        embed = Embed(embed=embedForm.embed.data, 
+        embed = Embed(embed=embedForm.embed.data,
                       name=embedForm.name.data,
                       author=current_user)
         db.session.add(embed)
         db.session.commit()
         flash('Added embed!')
         return redirect('/settings')
-    
-    return render_template('settings.html', 
-                            stocks=stockList, 
-                            stockForm=stockForm,
-                            todoForm=todoForm,                             
-                            todos=todoList,
-                            embedForm=embedForm,
-                            embeds=embedList, 
-                            locationForm=locationForm, 
-                            lat=lat, 
-                            lon=lon)
+
+    return render_template('settings.html',
+                           stocks=stockList,
+                           stockForm=stockForm,
+                           todoForm=todoForm,
+                           todos=todoList,
+                           embedForm=embedForm,
+                           embeds=embedList,
+                           locationForm=locationForm,
+                           lat=lat,
+                           lon=lon)
+
 
 """
 =========
@@ -146,6 +146,7 @@ def removeStock(stock):
     flash('Stock not found')
     return redirect('/settings')
 
+
 @app.route('/settings/todo/<todo_id>', methods=['GET', 'POST'])
 @login_required
 def removeTodo(todo_id):
@@ -159,6 +160,7 @@ def removeTodo(todo_id):
     flash('Todo not found!')
     return redirect('/settings')
 
+
 @app.route('/settings/embed/<embed_code>', methods=['GET', 'POST'])
 @login_required
 def removeEmbed(embed_code):
@@ -171,7 +173,8 @@ def removeEmbed(embed_code):
             return redirect('/settings')
     flash('Embed not found!')
     return redirect('/settings')
-    
+
+
 """
 =========
 ABOUT
@@ -180,6 +183,7 @@ ABOUT
 @app.route('/about')
 def about():
     return render_template('about.html')
+
 
 """
 =========
@@ -195,21 +199,20 @@ def register():
         user = User(username=form.username.data, email=form.email.data)
         user.set_password(form.password.data)
         db.session.add(user)
-        
 
         # Initiliaze some cools videos!
-        embed1 = Embed(embed='mFlrc16xjik', 
-                      name='Ocean stuff, whales, etc.',
-                      author=user)
-        db.session.add(embed1)
-        
+        embed1 = Embed(embed='mFlrc16xjik',
+                       name='Ocean stuff, whales, etc.',
+                       author=user)
 
-        embed2 = Embed(embed='Zk0W2UvyINM', 
-                      name='Relaxing nature',
-                      author=user)
+        embed2 = Embed(embed='Zk0W2UvyINM',
+                       name='Relaxing nature',
+                       author=user)
+
+        db.session.add(embed1)
         db.session.add(embed2)
         db.session.commit()
-        
+
         token = user.get_email_token()
         auth_email('welcome@flaskframe.com',
                    'Verify Your Account!',
@@ -218,6 +221,7 @@ def register():
         flash('Thanks! We just sent an email confirmation. ')
         return redirect(url_for('login'))
     return render_template('auth/register.html', form=form)
+
 
 """
 =========
@@ -257,6 +261,7 @@ def login():
         return redirect(next_page)
     return render_template('auth/login.html', form=form)
 
+
 """
 =========
 LOGOUT
@@ -278,7 +283,7 @@ DELETE USER
 def delete_user():
     form = DeleteUserForm()
     if form.validate_on_submit():
-        if current_user.check_password(form.password.data):            
+        if current_user.check_password(form.password.data):
             user = User.query.filter_by(id=current_user.id).first()
             db.session.delete(user)
             db.session.commit()
@@ -289,9 +294,8 @@ def delete_user():
             flash('Account deleted.')
             return(redirect('/login'))
         flash('That password does not seem to match')
-        return render_template('auth/delete_user.html', form=form)        
+        return render_template('auth/delete_user.html', form=form)
     return render_template('auth/delete_user.html', form=form)
-
 
 
 """
@@ -315,6 +319,7 @@ def new_password(token):
         db.session.commit()
         return redirect(url_for('login'))
     return render_template('auth/new_password.html', form=form)
+
 
 """
 =========

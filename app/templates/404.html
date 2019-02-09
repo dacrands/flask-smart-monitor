@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% include "./components/_navbar.html" %}
+<main class="container">
+  <header class="header">
+    <div>       
+      <h1>Oops!</h1>
+      <h2>That page doesn't exist.</h2>
+      <p><a href="{{ url_for('index') }}">&larr; Go Back</a></p>
+    </div>
+  </header>
+</main>
+
+{% endblock %}
