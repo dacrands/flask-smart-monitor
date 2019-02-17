@@ -1,8 +1,8 @@
 ![flask frame](https://i.imgur.com/yTIpYmGl.jpg)
 
-# Flask Smart Frame
+# ToViewIt
 
-Flask Smart Frame is a productivity application and a piece of art. More specifically, it is a to-do list application that has all sorts of extra features, intended to be used on either your desktop or laptop.
+ToViewIt is a productivity application and a piece of art. More specifically, it is a to-do list application that has all sorts of extra features, intended to be used on either your desktop or laptop.
 
 
 ### User Features
@@ -19,8 +19,8 @@ Flask Smart Frame is a productivity application and a piece of art. More specifi
 ### Application Features
 - User authentication and password resets using the SendGrid email client
 - Bcrypt password encryption
-- Postgresql database
-- Heroku hosting
+- MySQL database
+- Docker containers
 - Youtube IFrame API
 
 
@@ -45,7 +45,7 @@ The app worked fairly well, though I was desperately missing my bread and butter
 It wasn't until I started tooling around with Flask that I found my solution, and thus the creation of the `flask-smart-frame`. -->
 
 ## Description
-**FlaskFrame** is a Flask application that is currently hosted on Heroku. The database is Postgresql and written using the SQLAlchemy ORM. The following instructions assume that you have familiarity with Flask and configuring Python environments, either using `pip` or `conda`. (If you're new to this, I wrote a [blog post](https://dacrands.github.io/10-7-18) that will get you started with your first Flask application.) Additionally, you will need to sign-up for two free APIs.
+**ToViewIt** is a productivity application built using Flask. The application and the associated MySQL database are deployed from Docker containers hosted on DigitalOcean. The following instructions assume that you have familiarity with Flask and configuring Python environments, either using `pip` or `conda`. (If you're new to this, I wrote a [blog post](https://dacrands.github.io/10-7-18) that will get you started with your first Flask application.) Additionally, you will need to sign-up for two free APIs.
 
 ### Prerequisites
 - [Flask](http://flask.pocoo.org/docs/1.0/)
