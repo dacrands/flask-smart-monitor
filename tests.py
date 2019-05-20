@@ -1,4 +1,5 @@
 import unittest
+import requests
 from app import app, db
 from app.models import User
 
@@ -22,6 +23,20 @@ class UserModelCase(unittest.TestCase):
     token = user.get_email_token()
     valid_token = user.verify_email_token(token)    
     self.assertEqual(user.id, valid_token)
+
+class TestAPIRequests(unittest.TestCase):
+  def test_stock_request(self):
+    STOCKS_URL = "https://api.iextrading.com/1.0/stock/market/batch?symbols={0}&types=quote,news,chart&range=1m&last=10".format(
+          "aapl,amzn")
+    stockRes = requests.get(STOCKS_URL)
+    self.assertEqual(stockRes.status_code, 200)
+  
+  def test_weather_request(self):
+    user = User(latitude=0,longitude=2)
+    WEATHER_URL = "https://api.darksky.net/forecast/{0}/{1},{2}".format(
+        app.config['WEATHER_API_KEY'], user.latitude, user.longitude)
+    weatherRes = requests.get(WEATHER_URL)
+    self.assertEqual(weatherRes.status_code, 200)
 
 if __name__ == '__main__':
   unittest.main(verbosity=2)
