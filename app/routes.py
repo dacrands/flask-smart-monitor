@@ -12,8 +12,6 @@ from app.forms import TodoForm, StockForm, LoginForm, EmbedForm,\
 from app.models import User, Stock, Todo, Embed
 from app.email import auth_email, reset_email
 
-WEATHER_URL = "https://api.darksky.net/forecast/{0}/{1},{2}".format(
-    app.config['WEATHER_API_KEY'], app.config['LATITUDE'], app.config['LONGITUDE'])
 
 """
 =========
