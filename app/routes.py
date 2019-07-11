@@ -57,8 +57,7 @@ def index():
                            embeds=embedList,
                            todoForm=todoForm,
                            weatherData=weatherJson,
-                           stocksData=stocksJson,
-                           YTembed=app.config['YT_EMBED'])
+                           stocksData=stocksJson)
 
 
 """
