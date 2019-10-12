@@ -1,6 +1,5 @@
-keys.txt
 __pycache__
 toview_env
-
+.vscode
 app.db
 logs
