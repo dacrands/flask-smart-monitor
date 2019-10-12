@@ -26,8 +26,9 @@ class UserModelCase(unittest.TestCase):
 
 class TestAPIRequests(unittest.TestCase):
   def test_stock_request(self):
-    STOCKS_URL = "https://api.iextrading.com/1.0/stock/market/batch?symbols={0}&types=quote,news,chart&range=1m&last=10".format(
-          "aapl,amzn")
+    STOCKS_URL = "https://cloud.iexapis.com/v1/stock/market/batch?types=chart&symbols=aapl,goog,fb&token={0}".format(
+      app.config['STOCKS_API_KEY']
+    )
     stockRes = requests.get(STOCKS_URL)
     self.assertEqual(stockRes.status_code, 200)
   

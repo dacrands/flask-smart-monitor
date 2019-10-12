@@ -27,15 +27,15 @@ def index():
 
     userStocks = current_user.stocks.all()
     stockList = [stock.symbol for stock in userStocks]
+    stockStr = ','.join(stockList).rstrip(',')
 
     userEmbeds = current_user.embeds.all()
     embedList = [(embed.embed, embed.name) for embed in userEmbeds]
 
-    stockStr = ','.join(stockList).rstrip(',')
-
-    STOCKS_URL = "https://api.iextrading.com/1.0/stock/market/batch?symbols={0}&types=quote,news,chart&range=1m&last=10".format(
-        stockStr)
-
+    STOCKS_URL = "https://cloud.iexapis.com/v1/stock/market/batch?types=quote&symbols={0}&token={1}".format(
+        stockStr,
+        app.config['STOCKS_API_KEY']
+    )
     WEATHER_URL = "https://api.darksky.net/forecast/{0}/{1},{2}".format(
         app.config['WEATHER_API_KEY'], current_user.latitude, current_user.longitude)
 
@@ -51,6 +51,7 @@ def index():
         stocksJson = []
     else:
         stocksJson = stocksRes.json()
+    
 
     return render_template('index.html',
                            todos=todos,
