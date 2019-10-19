@@ -25,17 +25,16 @@ def index():
     userEmbeds = current_user.embeds.all()
     embedList = [(embed.embed, embed.name) for embed in userEmbeds]
 
-    # TODO Move to top of func
-    STOCKS_URL = "https://cloud.iexapis.com/v1/stock/market/batch?types=quote&symbols={0}&token={1}".format(
-        stockStr,
-        app.config['STOCKS_API_KEY'])
-    WEATHER_URL = "https://api.darksky.net/forecast/{0}/{1},{2}".format(
+    weatherUrl = "https://api.darksky.net/forecast/{0}/{1},{2}".format(
         app.config['WEATHER_API_KEY'],
         current_user.latitude,
         current_user.longitude)
+    stocksUrl = "https://cloud.iexapis.com/v1/stock/market/batch?types=quote&symbols={0}&token={1}".format(
+        stockStr,
+        app.config['STOCKS_API_KEY'])
 
     # TODO Move weather req logic to function
-    weatherRes = requests.get(WEATHER_URL)
+    weatherRes = requests.get(weatherUrl)
     # TODO Replace with exception
     if weatherRes.status_code != 200:
         weatherJson = {}
@@ -43,7 +42,7 @@ def index():
         weatherJson = weatherRes.json()
 
     # TODO Replace with exception
-    stocksRes = requests.get(STOCKS_URL)
+    stocksRes = requests.get(stocksUrl)
     if stocksRes.status_code != 200:
         stocksJson = []
     else:
