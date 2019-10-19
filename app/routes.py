@@ -208,9 +208,8 @@ def login():
 
     token = request.args.get('token')
     if token:
-        user_id = User.verify_email_token(token)
-        # TODO replace `==` with `is`
-        if type(user_id) == None:
+        user_id = User.verify_email_token(token)            
+        if user_id is None:
             flash('Something went wrong! Please try logging in.')
             return redirect(url_for('index'))
         user = User.query.get(user_id)
@@ -265,9 +264,9 @@ def delete_user():
 def new_password(token):
     """Reset User password if token is valid"""
     user_id = User.verify_email_token(token)
-    # TODO replace `==` with `is`
-    if type(user_id) == None:
+    if user_id is None:
         flash('Something went wrong! Please submit another password reset request.')
+        # TODO Redirect to settings
         return redirect(url_for('index'))
     user = User.query.get(user_id)
     if not user:
