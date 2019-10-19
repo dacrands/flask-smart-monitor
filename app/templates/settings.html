@@ -10,8 +10,7 @@
     <a href="/">Home</a> / <a href="/settings">Settings</a>
   </div>
   <div class="settings">
-    <h1 class="primary">Stocks</h1>
-    <!-- <h2 class="font-light">Your stocks: </h2> -->
+    <h2 class="primary">Stocks</h2>    
     <ul>
       {% for stock in stocks %}
       <li>
@@ -21,8 +20,7 @@
       </li>
       {% endfor %}
     </ul>
-    <form action="" method="post">
-      <!-- <h3 class="font-light">Add a stock: </h3> -->
+    <form action="" method="post">      
       {{ stockForm.hidden_tag() }}
       <p>
         {{ stockForm.symbol.label }}
@@ -36,11 +34,11 @@
   </div>
 
   <div class="settings">  
-    <h1 class="primary">Embeds
+    <h2 class="primary">Embeds
         <button class="tooltip__btn">          
             <img src="{{ url_for('static', filename='images/info.svg') }}" alt="">    
         </button>
-    </h1> 
+    </h2> 
     
     <span class="tooltip">Here is a link to a Youtube video: 
       <code>
@@ -50,8 +48,7 @@
       at the end is an <strong>embed code.</strong>
       Copy paste that code into the box below, add a title,
       and enjoy!
-    </span>
-    <!-- <h2 class="font-light">Your stocks: </h2> -->
+    </span>    
     <ul>
       {% for embed in embeds %}
       <li>
@@ -61,8 +58,7 @@
       </li>
       {% endfor %}
     </ul>
-    <form action="" method="post">
-      <!-- <h3 class="font-light">Add a stock: </h3> -->
+    <form action="" method="post">      
       {{ embedForm.hidden_tag() }}
       <p>
         {{ embedForm.embed.label }}
@@ -84,7 +80,7 @@
 
   <div class="settings">
     <form action="" method="post">
-      <h1 class="primary">Location</h1>
+      <h2 class="primary">Location</h2>
       <h3 class="font-light">{{lat, lon}} </h3>
       {{ locationForm.hidden_tag() }}
       <p>
@@ -106,7 +102,7 @@
 
 
   <div class="settings">
-      <h1 class="primary">Todo</h1>
+      <h2 class="primary">Todo</h2>
       <h3 class="font-light">What do you have to do?</h3>
       <ul>
         {% for todo in todos %}
