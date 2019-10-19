@@ -12,6 +12,14 @@ from app.forms import TodoForm, StockForm, LoginForm, EmbedForm,\
     ResetPasswordForm, NewPasswordForm, DeleteUserForm
 
 
+def getApiJson(apiUrl):
+    """Return json from API request or empty dict"""
+    apiReq = requests.get(apiUrl)
+    if apiReq.status_code != 200:
+        return {}
+    return apiReq.json()
+
+
 @app.route('/')
 @app.route('/index')
 @login_required
@@ -33,20 +41,8 @@ def index():
         stockStr,
         app.config['STOCKS_API_KEY'])
 
-    # TODO Move weather req logic to function
-    weatherRes = requests.get(weatherUrl)
-    # TODO Replace with exception
-    if weatherRes.status_code != 200:
-        weatherJson = {}
-    else:
-        weatherJson = weatherRes.json()
-
-    # TODO Replace with exception
-    stocksRes = requests.get(stocksUrl)
-    if stocksRes.status_code != 200:
-        stocksJson = []
-    else:
-        stocksJson = stocksRes.json()
+    weatherJson = getApiJson(weatherUrl)
+    stocksJson = getApiJson(stocksUrl)
 
     return render_template('index.html',
                            todos=todos,
@@ -58,7 +54,7 @@ def index():
 @app.route('/settings', methods=['GET', 'POST'])
 @login_required
 def settings():
-    """CRUD view for User data"""
+    """Return CRUD view for User data"""
     (lat, lon) = (current_user.latitude, current_user.longitude)
 
     userStocks = current_user.stocks.all()
