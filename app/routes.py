@@ -4,24 +4,20 @@ from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
 
 from app import app, db
+
+from app.models import User, Stock, Todo, Embed
+from app.email import auth_email, reset_email
 from app.forms import TodoForm, StockForm, LoginForm, EmbedForm,\
     RegistrationForm, LocationForm,\
     ResetPasswordForm, NewPasswordForm, DeleteUserForm
 
 
-from app.models import User, Stock, Todo, Embed
-from app.email import auth_email, reset_email
-
-
-"""
-=========
-INDEX
-=========
-"""
 @app.route('/')
 @app.route('/index')
 @login_required
 def index():
+    """Return the index view with current_user's data"""
+    # TODO Remove ToDoForm
     todoForm = TodoForm()
     todos = current_user.todos.all()
 
@@ -32,26 +28,29 @@ def index():
     userEmbeds = current_user.embeds.all()
     embedList = [(embed.embed, embed.name) for embed in userEmbeds]
 
+    # TODO Move to top of func
     STOCKS_URL = "https://cloud.iexapis.com/v1/stock/market/batch?types=quote&symbols={0}&token={1}".format(
         stockStr,
-        app.config['STOCKS_API_KEY']
-    )
+        app.config['STOCKS_API_KEY'])
     WEATHER_URL = "https://api.darksky.net/forecast/{0}/{1},{2}".format(
-        app.config['WEATHER_API_KEY'], current_user.latitude, current_user.longitude)
+        app.config['WEATHER_API_KEY'],
+        current_user.latitude,
+        current_user.longitude)
 
+    # TODO Move weather req logic to function
     weatherRes = requests.get(WEATHER_URL)
-
+    # TODO Replace with exception
     if weatherRes.status_code != 200:
-        weatherJson = False
+        weatherJson = {}
     else:
         weatherJson = weatherRes.json()
 
+    # TODO Replace with exception
     stocksRes = requests.get(STOCKS_URL)
     if stocksRes.status_code != 200:
         stocksJson = []
     else:
         stocksJson = stocksRes.json()
-    
 
     return render_template('index.html',
                            todos=todos,
@@ -61,14 +60,10 @@ def index():
                            stocksData=stocksJson)
 
 
-"""
-=========
-SETTINGS
-=========
-"""
 @app.route('/settings', methods=['GET', 'POST'])
 @login_required
 def settings():
+    """CRUD view for User data"""
     (lat, lon) = (current_user.latitude, current_user.longitude)
 
     userStocks = current_user.stocks.all()
@@ -80,7 +75,9 @@ def settings():
     userEmbeds = current_user.embeds.all()
     embedList = [(embed.embed, embed.name) for embed in userEmbeds]
 
+    # TODO move all forms to top
     locationForm = LocationForm()
+    # TODO move `if` blocks to a func
     if locationForm.submitLoc.data and locationForm.validate_on_submit():
         current_user.set_location(locationForm.lat.data, locationForm.lon.data)
         db.session.commit()
@@ -125,16 +122,13 @@ def settings():
                            lon=lon)
 
 
-"""
-=========
-SETTINGS 
-- edit
-=========
-"""
+# TODO Use DELETE instead of POST
 @app.route('/settings/<stock>', methods=['GET', 'POST'])
 @login_required
 def removeStock(stock):
+    """Remove a User's Stock if it exists"""
     userStocks = current_user.stocks.all()
+    # TODO Rename _stock
     for _stock in userStocks:
         if _stock.symbol == stock:
             db.session.delete(_stock)
@@ -144,10 +138,11 @@ def removeStock(stock):
     flash('Stock not found')
     return redirect('/settings')
 
-
+# TODO Use DELETE instead of POST
 @app.route('/settings/todo/<todo_id>', methods=['GET', 'POST'])
 @login_required
 def removeTodo(todo_id):
+    """Remove a User's Todo if it exists"""
     userTodos = current_user.todos.all()
     for todo in userTodos:
         if todo.id == int(todo_id):
@@ -158,10 +153,11 @@ def removeTodo(todo_id):
     flash('Todo not found!')
     return redirect('/settings')
 
-
+# TODO Use DELETE instead of POST
 @app.route('/settings/embed/<embed_code>', methods=['GET', 'POST'])
 @login_required
 def removeEmbed(embed_code):
+    """Remove a User's Embed if it exists"""
     userEmbeds = current_user.embeds.all()
     for embed in userEmbeds:
         if embed.embed == embed_code:
@@ -172,24 +168,15 @@ def removeEmbed(embed_code):
     flash('Embed not found!')
     return redirect('/settings')
 
-
-"""
-=========
-ABOUT
-=========
-"""
+# TODO move to bottom of routes
 @app.route('/about')
 def about():
     return render_template('about.html')
 
 
-"""
-=========
-REGISTER
-=========
-"""
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    """Registers a new User and sends verification email"""
     if current_user.is_authenticated:
         return redirect(url_for('index'))
     form = RegistrationForm()
@@ -218,22 +205,20 @@ def register():
                    render_template('email/reg_email.html', token=token))
         flash('Thanks! We just sent an email confirmation. ')
         return redirect(url_for('login'))
+
     return render_template('auth/register.html', form=form)
 
 
-"""
-=========
-LOGIN
-=========
-"""
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    """Log User in on submit LoginForm or valid verification token"""
     if current_user.is_authenticated:
         return redirect(url_for('index'))
 
     token = request.args.get('token')
     if token:
         user_id = User.verify_email_token(token)
+        # TODO replace `==` with `is`
         if type(user_id) == None:
             flash('Something went wrong! Please try logging in.')
             return redirect(url_for('index'))
@@ -260,34 +245,23 @@ def login():
     return render_template('auth/login.html', form=form)
 
 
-"""
-=========
-LOGOUT
-=========
-"""
 @app.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('index'))
 
-
-"""
-=========
-DELETE USER
-=========
-"""
+# TODO Use DELETE instead of POST
 @app.route('/delete', methods=['GET', 'POST'])
 @login_required
 def delete_user():
+    """Delete current_user if User password is valid"""
     form = DeleteUserForm()
     if form.validate_on_submit():
         if current_user.check_password(form.password.data):
             user = User.query.filter_by(id=current_user.id).first()
             db.session.delete(user)
             db.session.commit()
-
-            # You need to log out the user to remove the cookie,
-            # This caused me a headache, not literally, but you understand.
+            # Log user out to remove cookie
             logout_user()
             flash('Account deleted.')
             return(redirect('/login'))
@@ -296,15 +270,11 @@ def delete_user():
     return render_template('auth/delete_user.html', form=form)
 
 
-"""
-=========
-PASSWORD
-NEW
-=========
-"""
 @app.route('/new_password/<token>', methods=['GET', 'POST'])
 def new_password(token):
+    """Reset User password if token is valid"""
     user_id = User.verify_email_token(token)
+    # TODO replace `==` with `is`
     if type(user_id) == None:
         flash('Something went wrong! Please submit another password reset request.')
         return redirect(url_for('index'))
@@ -319,14 +289,9 @@ def new_password(token):
     return render_template('auth/new_password.html', form=form)
 
 
-"""
-=========
-PASSWORD
-RESET
-=========
-"""
 @app.route('/reset_password', methods=['GET', 'POST'])
 def reset_password():
+    """Send password reset link if User email exists"""
     form = ResetPasswordForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
