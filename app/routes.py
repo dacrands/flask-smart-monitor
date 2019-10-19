@@ -17,10 +17,7 @@ from app.forms import TodoForm, StockForm, LoginForm, EmbedForm,\
 @login_required
 def index():
     """Return the index view with current_user's data"""
-    # TODO Remove ToDoForm
-    todoForm = TodoForm()
     todos = current_user.todos.all()
-
     userStocks = current_user.stocks.all()
     stockList = [stock.symbol for stock in userStocks]
     stockStr = ','.join(stockList).rstrip(',')
@@ -55,7 +52,6 @@ def index():
     return render_template('index.html',
                            todos=todos,
                            embeds=embedList,
-                           todoForm=todoForm,
                            weatherData=weatherJson,
                            stocksData=stocksJson)
 
