@@ -17,6 +17,14 @@ from app.forms import TodoForm, StockForm, LoginForm, EmbedForm,\
 @login_required
 def index():
     """Return the index view with current_user's data"""
+    todos = current_user.todos.all()
+    userStocks = current_user.stocks.all()
+    stockList = [stock.symbol for stock in userStocks]
+    stockStr = ','.join(stockList).rstrip(',')
+
+    userEmbeds = current_user.embeds.all()
+    embedList = [(embed.embed, embed.name) for embed in userEmbeds]
+
     # TODO Move to top of func
     STOCKS_URL = "https://cloud.iexapis.com/v1/stock/market/batch?types=quote&symbols={0}&token={1}".format(
         stockStr,
@@ -26,13 +34,6 @@ def index():
         current_user.latitude,
         current_user.longitude)
 
-    todos = current_user.todos.all()
-    userStocks = current_user.stocks.all()
-    stockList = [stock.symbol for stock in userStocks]
-    stockStr = ','.join(stockList).rstrip(',')
-
-    userEmbeds = current_user.embeds.all()
-    embedList = [(embed.embed, embed.name) for embed in userEmbeds]
     # TODO Move weather req logic to function
     weatherRes = requests.get(WEATHER_URL)
     # TODO Replace with exception
