@@ -266,7 +266,6 @@ def new_password(token):
     user_id = User.verify_email_token(token)
     if user_id is None:
         flash('Something went wrong! Please submit another password reset request.')
-        # TODO Redirect to settings
         return redirect(url_for('index'))
     user = User.query.get(user_id)
     if not user:
