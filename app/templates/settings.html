@@ -9,7 +9,7 @@
   <div class="crumbs">
     <a href="/">Home</a> / <a href="/settings">Settings</a>
   </div>
-  <section class="settings">
+  <section class="section">
     <h2 class="primary">Stocks</h2>    
     <ul>
       {% for stock in stocks %}
@@ -33,7 +33,7 @@
     </form>
   </section>
 
-  <section class="settings">  
+  <section class="section">  
     <h2 class="primary">Embeds
         <button class="tooltip__btn">          
             <img src="{{ url_for('static', filename='images/info.svg') }}" alt="">    
@@ -77,7 +77,7 @@
     </form>
   </section>
 
-  <section class="settings">
+  <section class="section">
     <form action="" method="post">
       <h2 class="primary">Location</h2>
       <h3 class="font-light">{{lat, lon}} </h3>
@@ -100,7 +100,7 @@
   </section>
 
 
-  <section class="settings">
+  <section class="section">
       <h2 class="primary">Todo</h2>
       <h3 class="font-light">What do you have to do?</h3>
       <ul>
