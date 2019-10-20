@@ -9,7 +9,7 @@
   <div class="crumbs">
     <a href="/">Home</a> / <a href="/settings">Settings</a>
   </div>
-  <div class="settings">
+  <section class="settings">
     <h2 class="primary">Stocks</h2>    
     <ul>
       {% for stock in stocks %}
@@ -31,15 +31,14 @@
       </p>
       <p class=>{{ stockForm.submitStock() }}</p>
     </form>
-  </div>
+  </section>
 
-  <div class="settings">  
+  <section class="settings">  
     <h2 class="primary">Embeds
         <button class="tooltip__btn">          
             <img src="{{ url_for('static', filename='images/info.svg') }}" alt="">    
         </button>
-    </h2> 
-    
+    </h2>     
     <span class="tooltip">Here is a link to a Youtube video: 
       <code>
         https://www.youtube.com/watch?v=<strong>FGBhQbmPwH8</strong>
@@ -76,9 +75,9 @@
       </p>
       <p class=>{{ embedForm.submitEmbed() }}</p>
     </form>
-  </div>
+  </section>
 
-  <div class="settings">
+  <section class="settings">
     <form action="" method="post">
       <h2 class="primary">Location</h2>
       <h3 class="font-light">{{lat, lon}} </h3>
@@ -98,10 +97,10 @@
       </p>
       <p class=>{{ locationForm.submitLoc() }}</p>
     </form>
-  </div>
+  </section>
 
 
-  <div class="settings">
+  <section class="settings">
       <h2 class="primary">Todo</h2>
       <h3 class="font-light">What do you have to do?</h3>
       <ul>
@@ -123,7 +122,7 @@
       </p>
       <p class=>{{ todoForm.submitTodo() }}</p>
     </form>
-  </div>
+  </section>
 
   <div class="danger">
     <a class="danger" href="{{url_for('delete_user')}}">
