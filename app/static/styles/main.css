@@ -276,29 +276,20 @@ input[type=submit]:hover {
 /* ===============
     SETTINGS
 ================*/
-.settings {
+.section {
   margin-bottom: 3rem;
 }
 
-.settings ul {
+.section ul {
   list-style: none;
   padding: 0;
 }
 
-.settings ul h3 {
+.section ul h3 {
   margin: .5rem;
 }
 
-.settings a {
-  font-size: .7rem;
-  color: rgb(22, 155, 152);
-}
-
-.settings a:hover {
-  color: rgb(211, 40, 54);
-}
-
-.settings li {
+.section li {
   display: inline-block;
   padding: 0.5rem 1rem;
   margin: 0.5rem;
@@ -307,6 +298,14 @@ input[type=submit]:hover {
   text-align: center;
 }
 
+.section a {
+  font-size: .7rem;
+  color: rgb(22, 155, 152);
+}
+
+.section a:hover {
+  color: rgb(211, 40, 54);
+}
 
 
 /* ===============
