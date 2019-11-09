@@ -38,8 +38,7 @@ def index():
         current_user.latitude,
         current_user.longitude)
     stocksUrl = "https://cloud.iexapis.com/v1/stock/market/batch?types=quote&symbols={0}&token={1}".format(
-        stockStr,
-        app.config['STOCKS_API_KEY'])
+        stockStr, app.config['STOCKS_API_KEY'])
 
     weatherJson = getApiJson(weatherUrl)
     stocksJson = getApiJson(stocksUrl)
@@ -208,7 +207,7 @@ def login():
 
     token = request.args.get('token')
     if token:
-        user_id = User.verify_email_token(token)            
+        user_id = User.verify_email_token(token)
         if user_id is None:
             flash('Something went wrong! Please try logging in.')
             return redirect(url_for('index'))
