@@ -70,7 +70,13 @@ def login():
             flash('Invalid username or password')
             return redirect(url_for('auth.login'))
         if not user.is_verified:
-            flash('You need to verify your account')
+            user_token = user.get_email_token()
+            auth_email('welcome@flaskframe.com',
+                   'Verify Your Account!',
+                   user.email,
+                   render_template('email/reg_email.html', token=user_token))
+            flash('You need to verify your account. \
+                We just sent another email confirmation')
             return redirect(url_for('auth.login'))
         login_user(user, remember=form.remember_me.data)
         next_page = request.args.get('next')
