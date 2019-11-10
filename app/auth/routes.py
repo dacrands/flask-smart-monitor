@@ -14,7 +14,7 @@ from app.auth.forms import LoginForm, RegistrationForm, \
 def register():
     """Registers a new User and sends verification email"""
     if current_user.is_authenticated:
-        return redirect(url_for('index'))
+        return redirect(url_for('main.index'))
     form = RegistrationForm()
     if form.validate_on_submit():
         user = User(username=form.username.data, email=form.email.data)
@@ -49,19 +49,19 @@ def register():
 def login():
     """Log User in on submit LoginForm or valid verification token"""
     if current_user.is_authenticated:
-        return redirect(url_for('index'))
+        return redirect(url_for('main.index'))
 
     token = request.args.get('token')
     if token:
         user_id = User.verify_email_token(token)
         if user_id is None:
             flash('Something went wrong! Please try logging in.')
-            return redirect(url_for('index'))
+            return redirect(url_for('main.index'))
         user = User.query.get(user_id)
         user.set_verify(True)
         db.session.commit()
         login_user(user)
-        return redirect(url_for('index'))
+        return redirect(url_for('main.index'))
 
     form = LoginForm()
     if form.validate_on_submit():
@@ -71,11 +71,11 @@ def login():
             return redirect(url_for('auth.login'))
         if not user.is_verified:
             flash('You need to verify your account')
-            return redirect(url_for('login'))
+            return redirect(url_for('auth.login'))
         login_user(user, remember=form.remember_me.data)
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
-            next_page = url_for('index')
+            next_page = url_for('main.index')
         return redirect(next_page)
     return render_template('auth/login.html', form=form)
 
@@ -83,7 +83,7 @@ def login():
 @bp.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('main.index'))
 
 # TODO Use DELETE instead of POST
 @bp.route('/delete', methods=['GET', 'POST'])
@@ -111,10 +111,10 @@ def new_password(token):
     user_id = User.verify_email_token(token)
     if user_id is None:
         flash('Something went wrong! Please submit another password reset request.')
-        return redirect(url_for('index'))
+        return redirect(url_for('main.index'))
     user = User.query.get(user_id)
     if not user:
-        return redirect(url_for('index'))
+        return redirect(url_for('main.index'))
     form = NewPasswordForm()
     if form.validate_on_submit():
         user.set_password(form.password.data)
