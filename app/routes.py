@@ -6,7 +6,6 @@ from werkzeug.urls import url_parse
 from app import app, db
 
 from app.models import User, Stock, Todo, Embed
-from app.email import auth_email, reset_email
 from app.forms import TodoForm, StockForm, EmbedForm, LocationForm
 
 
