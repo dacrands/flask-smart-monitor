@@ -17,6 +17,8 @@ bcrypt = Bcrypt(app)
 login = LoginManager(app)
 login.login_view = 'login'
 
+from app.errors import bp as errors_bp
+app.register_blueprint(errors_bp)
 
 if not app.debug:
     if not os.path.exists('logs'):
@@ -37,4 +39,4 @@ if not app.debug:
     file_handler.setLevel(logging.INFO)
     app.logger.info('ToViewIt')
 
-from app import routes, models, errors
+from app import routes, models
