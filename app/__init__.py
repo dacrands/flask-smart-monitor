@@ -15,10 +15,12 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 bcrypt = Bcrypt(app)
 login = LoginManager(app)
-login.login_view = 'login'
+login.login_view = 'auth.login'
 
 from app.errors import bp as errors_bp
+from app.auth import bp as auth_bp
 app.register_blueprint(errors_bp)
+app.register_blueprint(auth_bp)
 
 if not app.debug:
     if not os.path.exists('logs'):
