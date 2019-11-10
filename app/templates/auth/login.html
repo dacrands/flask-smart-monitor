@@ -24,10 +24,10 @@
     <p class=>{{ form.submit() }}</p>
 
     <p>Not a member? 
-      <a href="{{ url_for('register') }}">Register here &rsaquo;</a> 
+      <a href="{{ url_for('auth.register') }}">Register here &rsaquo;</a> 
       <br> 
       Forgot your password? 
-      <a href="{{ url_for('reset_password') }}">Reset password &rsaquo;</a> 
+      <a href="{{ url_for('auth.reset_password') }}">Reset password &rsaquo;</a> 
       <br> 
       Not sure what this is?
       <a href="{{ url_for('about') }}">Learn more &rsaquo;</a></p>        
