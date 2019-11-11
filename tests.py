@@ -1,17 +1,29 @@
+import os
 import unittest
 import requests
-from app import app, db
+from app import create_app, db
 from app.models import User
+from config import Config
+
+
+class TestConfig(Config):
+    TESTING = True
+    SQLALCHEMY_DATABASE_URI = 'sqlite://'
+    WEATHER_API_KEY = os.environ.get('WEATHER_API_KEY') or 'nice-try'
+    STOCKS_API_KEY = os.environ.get('STOCKS_API_KEY') or 'nice-try'
 
 
 class UserModelCase(unittest.TestCase):
     def setUp(self):
-        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://'
+        self.app = create_app(TestConfig)
+        self.app_context = self.app.app_context()
+        self.app_context.push()
         db.create_all()
 
     def tearDown(self):
         db.session.remove()
         db.drop_all()
+        self.app_context.pop()
 
     def test_password_hashing(self):
         user = User(username='dave')
@@ -19,24 +31,61 @@ class UserModelCase(unittest.TestCase):
         self.assertFalse(user.check_password('cat'))
         self.assertTrue(user.check_password('dog'))
 
-    def test_verify_token(self):
+    def test_user_token(self):
         user = User(id=0)
-        token = user.get_email_token()
+        token = user.get_email_token()        
         valid_token = user.verify_email_token(token)
+        invalid_token = user.verify_email_token("token")
         self.assertEqual(user.id, valid_token)
+        self.assertEqual(None, invalid_token)
+
+
+class TestMainRoutes(unittest.TestCase):
+    def setUp(self):
+        self.app = create_app(TestConfig)
+        self.app_context = self.app.app_context()
+        self.app_context.push()
+        self.client = self.app.test_client()
+
+    def tearDown(self):
+        self.app_context.pop()
+
+    def test_index_request(self):
+        request = self.client.get('/')
+        self.assertEqual(request.status_code, 302)
+
+    def test_index_redirect(self):
+        request = self.client.get('/', follow_redirects=True)
+        self.assertEqual(request.status_code, 200)
+
+    def test_settings_redirect(self):
+        request = self.client.get('/settings')
+        self.assertEqual(request.status_code, 302)
+
+    def test_settings_request(self):
+        request = self.client.get('/settings', follow_redirects=True)
+        self.assertEqual(request.status_code, 200)
 
 
 class TestAPIRequests(unittest.TestCase):
+    def setUp(self):
+        self.app = create_app(TestConfig)
+        self.app_context = self.app.app_context()
+        self.app_context.push()
+
+    def tearDown(self):
+        self.app_context.pop()
+
     def test_stock_request(self):
         STOCKS_URL = "https://cloud.iexapis.com/v1/stock/market/batch?types=chart&symbols=aapl,goog,fb&token={0}".format(
-            app.config['STOCKS_API_KEY'])
+            self.app.config['STOCKS_API_KEY'])
         stockRes = requests.get(STOCKS_URL)
         self.assertEqual(stockRes.status_code, 200)
 
     def test_weather_request(self):
         user = User(latitude=0, longitude=2)
         WEATHER_URL = "https://api.darksky.net/forecast/{0}/{1},{2}".format(
-            app.config['WEATHER_API_KEY'], user.latitude, user.longitude)
+            self.app.config['WEATHER_API_KEY'], user.latitude, user.longitude)
         weatherRes = requests.get(WEATHER_URL)
         self.assertEqual(weatherRes.status_code, 200)
 
