@@ -1,9 +1,9 @@
 import requests
-from flask import render_template, flash, redirect, request, jsonify
+from flask import current_app, render_template, flash, redirect, request, jsonify
 from flask_login import current_user, login_required
 from werkzeug.urls import url_parse
 
-from app import app, db
+from app import db
 from app.models import User, Stock, Todo, Embed
 
 from app.main import bp
@@ -32,11 +32,11 @@ def index():
     embedList = [(embed.embed, embed.name) for embed in userEmbeds]
 
     weatherUrl = "https://api.darksky.net/forecast/{0}/{1},{2}".format(
-        app.config['WEATHER_API_KEY'],
+        current_app.config['WEATHER_API_KEY'],
         current_user.latitude,
         current_user.longitude)
     stocksUrl = "https://cloud.iexapis.com/v1/stock/market/batch?types=quote&symbols={0}&token={1}".format(
-        stockStr, app.config['STOCKS_API_KEY'])
+        stockStr, current_app.config['STOCKS_API_KEY'])
 
     weatherJson = getApiJson(weatherUrl)
     stocksJson = getApiJson(stocksUrl)
