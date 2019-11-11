@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<a class="back" href="{{url_for('settings')}}"> &larr; Back</a>
+<a class="back" href="{{url_for('main.settings')}}"> &larr; Back</a>
 
 <div class="form__container">
   <h2>Delete account</h2>
@@ -21,7 +21,7 @@
     <p class="danger">{{ form.submit() }}</p>
     <p>
       Forgot your password?
-      <a href="{{url_for('reset_password')}}">Password Reset</a>
+      <a href="{{url_for('auth.reset_password')}}">Password Reset</a>
     </p>
     
   </form>

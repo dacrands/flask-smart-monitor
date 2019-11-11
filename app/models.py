@@ -1,5 +1,5 @@
-from app import app, db
-from app import login
+from app import db, login
+from flask import current_app
 from flask_bcrypt import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from time import time
@@ -33,7 +33,7 @@ class User(UserMixin, db.Model):
     def get_email_token(self, expires_in=600):
         return jwt.encode(
             {'verify_email': self.id, 'exp': time() + expires_in},
-            app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
+            current_app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
 
     def set_verify(self, authBool):
         self.is_verified = authBool
@@ -41,7 +41,7 @@ class User(UserMixin, db.Model):
     @staticmethod
     def verify_email_token(token):
         try:
-            jwt_id = jwt.decode(token, app.config['SECRET_KEY'],
+            jwt_id = jwt.decode(token, current_app.config['SECRET_KEY'],
                                 algorithms=['HS256'])['verify_email']
         except:
             return None
