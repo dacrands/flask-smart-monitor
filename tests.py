@@ -12,10 +12,11 @@ TEST_DB_PATH = 'sqlite:///' + os.path.join(basedir, 'test_app.db')
 
 class TestConfig(Config):
     TESTING = True
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'secret-secrets-are-no-fun'
     SQLALCHEMY_DATABASE_URI = TEST_DB_PATH
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'secret-secrets-are-no-fun'
-    WEATHER_API_KEY = os.environ.get('WEATHER_API_KEY') or 'that-stinks'
     STOCKS_API_KEY = os.environ.get('STOCKS_API_KEY') or 'nice-try'
+    WEATHER_API_KEY = os.environ.get('WEATHER_API_KEY') or 'that-stinks'
 
 
 class UserModelCase(unittest.TestCase):
@@ -60,8 +61,10 @@ class TestMainRoutes(unittest.TestCase):
         self.assertEqual(request.status_code, 302)
 
     def test_index_redirect(self):
+        login_redirect_msg = b"<li>Please log in to access this page.</li>"
         request = self.client.get('/', follow_redirects=True)
         self.assertEqual(request.status_code, 200)
+        assert login_redirect_msg in request.data
 
     def test_settings_redirect(self):
         request = self.client.get('/settings')
