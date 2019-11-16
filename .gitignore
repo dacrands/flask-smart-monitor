@@ -1,5 +1,5 @@
 __pycache__
 toview_env
 .vscode
-app.db
+*.db
 logs
