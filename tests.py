@@ -5,11 +5,16 @@ from app import create_app, db
 from app.models import User
 from config import Config
 
+basedir = os.path.abspath(os.path.dirname(__file__))
+
+TEST_DB_PATH = 'sqlite:///' + os.path.join(basedir, 'test_app.db')
+
 
 class TestConfig(Config):
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = 'sqlite://'
-    WEATHER_API_KEY = os.environ.get('WEATHER_API_KEY') or 'nice-try'
+    SQLALCHEMY_DATABASE_URI = TEST_DB_PATH
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'secret-secrets-are-no-fun'
+    WEATHER_API_KEY = os.environ.get('WEATHER_API_KEY') or 'that-stinks'
     STOCKS_API_KEY = os.environ.get('STOCKS_API_KEY') or 'nice-try'
 
 
