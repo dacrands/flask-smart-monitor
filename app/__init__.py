@@ -18,7 +18,7 @@ login.login_message = 'Please log in to access this page.'
 
 def create_app(config_class=Config):
     app = Flask(__name__)
-    app.config.from_object(Config)
+    app.config.from_object(config_class)
 
     db.init_app(app)
     migrate.init_app(app, db)
