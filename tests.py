@@ -39,7 +39,7 @@ class UserModelCase(unittest.TestCase):
 
     def test_user_token(self):
         user = User(id=0)
-        token = user.get_email_token()        
+        token = user.get_email_token()
         valid_token = user.verify_email_token(token)
         invalid_token = user.verify_email_token("token")
         self.assertEqual(user.id, valid_token)
@@ -57,7 +57,10 @@ class TestMainRoutes(unittest.TestCase):
         self.app_context.pop()
 
     def test_index_request(self):
+        login_redirect_location = 'http://localhost/login?next=%2F'
         request = self.client.get('/')
+        self.assertEqual(request.headers.get('Location'),
+                         login_redirect_location)
         self.assertEqual(request.status_code, 302)
 
     def test_index_redirect(self):
