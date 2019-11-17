@@ -3,3 +3,4 @@ toview_env
 .vscode
 *.db
 logs
+.DS_Store
